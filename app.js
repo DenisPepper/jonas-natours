@@ -13,6 +13,12 @@ const tours = JSON.parse(fs.readFileSync(toursPath));
 const app = express();
 app.use(express.json());
 
+// пользовательское middleware
+app.use((req, res, next) => {
+  console.log('custom middleware');
+  next();
+});
+
 const getTours = (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -78,14 +84,9 @@ const deleteTour = (req, res) => {
   res.status(204);
 };
 
-app.route(routes.tours)
-  .get(getTours)
-  .post(createTour);
+app.route(routes.tours).get(getTours).post(createTour);
 
-app.route(routes.tour)
-  .get(getTourById)
-  .patch(updateTour)
-  .delete(deleteTour);
+app.route(routes.tour).get(getTourById).patch(updateTour).delete(deleteTour);
 
 /* 
 app.get(routes.home, (req, res) => {
