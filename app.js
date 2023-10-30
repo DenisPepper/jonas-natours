@@ -62,7 +62,7 @@ app.patch(routes.tour, (req, res) => {
   res.status(200).json({
     status: 'success',
     data: {
-      tour,
+      newtour,
     },
   });
 });
