@@ -7,7 +7,7 @@ const routes = {
 const app = express();
 
 app.get(routes.home, (req, res) => {
-  res.status(200).send('welcome to home page');
+  res.status(200).json({ message: 'welcome to home page', app: 'Natours app' });
 });
 
 app.listen(port, () => console.log(`server run on ${port} port ...`));
