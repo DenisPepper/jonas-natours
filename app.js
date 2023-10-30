@@ -1,5 +1,6 @@
 const fs = require('fs');
 const express = require('express');
+const morgan = require('morgan');
 const port = 3000;
 const routes = {
   home: '/',
@@ -11,6 +12,9 @@ const toursPath = `${__dirname}/dev-data/data/tours.json`;
 const tours = JSON.parse(fs.readFileSync(toursPath));
 
 const app = express();
+
+// --------1 middleware -------------------
+
 app.use(express.json());
 
 // пользовательское middleware
@@ -24,6 +28,8 @@ app.use((req, res, next) => {
   req.time = Date.now();
   next();
 });
+
+// --------2 routes handlers -------------------
 
 const getTours = (req, res) => {
   res.status(200).json({
@@ -91,17 +97,11 @@ const deleteTour = (req, res) => {
   res.status(204);
 };
 
+// --------3 routes -------------------
+
 app.route(routes.tours).get(getTours).post(createTour);
 
 app.route(routes.tour).get(getTourById).patch(updateTour).delete(deleteTour);
 
-/* 
-app.get(routes.home, (req, res) => {
-  res.status(200).json({ message: 'welcome to home page', app: 'Natours app' });
-});
-
-app.post(routes.home, (req, res) => {
-  res.status(404).send('Stop doing this...');
-});
- */
+// --------4 start server -------------------
 app.listen(port, () => console.log(`server run on ${port} port ...`));
