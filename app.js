@@ -58,13 +58,24 @@ app.patch(routes.tour, (req, res) => {
 
   const newtour = { ...tour, ...req.body };
   // update tour in DB and send it back
-  
+
   res.status(200).json({
     status: 'success',
     data: {
-      newtour,
+      tour: newtour,
     },
   });
+});
+
+app.delete(routes.tour, (req, res) => {
+  const { id, type } = req.params;
+  const tour = tours.find((tour) => id === tour._id);
+
+  if (!tour) return res.status(404).send('Invalid id');
+
+  // delete tour from DB and send response without payload
+
+  res.status(204);
 });
 
 /* 
