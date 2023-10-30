@@ -4,7 +4,7 @@ GET http://127.0.0.1:3000/api/v1/tours HTTP/1.1
 
 ###
 // get tour by id
-GET http://127.0.0.1:3000/api/v1/tours/5c88fa8cf4afda39709c2955/Point HTTP/1.1
+GET http://127.0.0.1:3000/api/v1/tours/5c88fa8cf4afda39709c2955 HTTP/1.1
 
 ###
 // create a new tour

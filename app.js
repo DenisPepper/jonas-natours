@@ -4,7 +4,7 @@ const port = 3000;
 const routes = {
   home: '/',
   tours: '/api/v1/tours',
-  tour: '/api/v1/tours/:id/:type',
+  tour: '/api/v1/tours/:id/:type?', //:type? - необязательный параметр
 };
 const toursPath = `${__dirname}/dev-data/data/tours.json`;
 
@@ -19,6 +19,18 @@ app.get(routes.tours, (req, res) => {
     results: tours.length,
     data: {
       tours,
+    },
+  });
+});
+
+app.get(routes.tour, (req, res) => {
+  const { id, type } = req.params;
+  const tour = tours.find((tour) => id === tour._id);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour,
     },
   });
 });
