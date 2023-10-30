@@ -1,0 +1,20 @@
+{
+  "name": "jonas-natours",
+  "version": "1.0.0",
+  "description": "Learning node, express, mongoDB",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DenisPepper/jonas-natours.git"
+  },
+  "keywords": [],
+  "author": "Denis Pepper",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DenisPepper/jonas-natours/issues"
+  },
+  "homepage": "https://github.com/DenisPepper/jonas-natours#readme"
+}
