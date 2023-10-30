@@ -1,32 +1,15 @@
 const express = require('express');
-
+const userController = require('../controllers/user-controller');
 const router = express.Router();
 
-const getStub = (req, res) => {
-  res.status(500).send('server error!');
-};
-
-const getAllUsers = (req, res) => {
-  return getStub(req, res);
-};
-
-const createUser = (req, res) => {
-  return getStub(req, res);
-};
-
-const getUsersById = (req, res) => {
-  return getStub(req, res);
-};
-
-const updateUser = (req, res) => {
-  return getStub(req, res);
-};
-
-const deleteUser = (req, res) => {
-  return getStub(req, res);
-};
-
-router.route('/').get(getAllUsers).post(createUser);
-router.route('/:id').get(getUsersById).patch(updateUser).delete(deleteUser);
+router
+  .route('/')
+  .get(userController.getAllUsers)
+  .post(userController.createUser);
+router
+  .route('/:id')
+  .get(userController.getUsersById)
+  .patch(userController.updateUser)
+  .delete(userController.deleteUser);
 
 module.exports = router;
