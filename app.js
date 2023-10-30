@@ -19,9 +19,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// мидлвара, которая добавляет время запроса
+app.use((req, res, next) => {
+  req.time = Date.now();
+  next();
+});
+
 const getTours = (req, res) => {
   res.status(200).json({
     status: 'success',
+    time: req.time,
     results: tours.length,
     data: {
       tours,
