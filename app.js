@@ -30,4 +30,4 @@ app.use((req, res, next) => {
 app.use(routes.users, userRouter);
 app.use(routes.tours, tourRouter);
 
-module.export = app;
+module.exports = app;
