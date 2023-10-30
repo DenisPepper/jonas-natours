@@ -96,6 +96,30 @@ const deleteTour = (req, res) => {
   res.status(204);
 };
 
+const getStub = (req, res) => {
+  res.status(500).send('server error!');
+};
+
+const getAllUsers = (req, res) => {
+  return getStub(req, res);
+};
+
+const createUser = (req, res) => {
+  return getStub(req, res);
+};
+
+const getUsersById = (req, res) => {
+  return getStub(req, res);
+};
+
+const updateUser = (req, res) => {
+  return getStub(req, res);
+};
+
+const deleteUser = (req, res) => {
+  return getStub(req, res);
+};
+
 // --------3 routes -------------------
 
 app.route(routes.users).get(getAllUsers).post(createUser);
