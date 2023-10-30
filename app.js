@@ -56,7 +56,9 @@ app.patch(routes.tour, (req, res) => {
 
   if (!tour) return res.status(404).send('Invalid id');
 
+  const newtour = { ...tour, ...req.body };
   // update tour in DB and send it back
+  
   res.status(200).json({
     status: 'success',
     data: {
