@@ -5,9 +5,9 @@ const port = 3000;
 const routes = {
   home: '/',
   users: '/api/v1/users',
-  user: '/api/v1/users/:id',
+  //user: '/api/v1/users/:id',
   tours: '/api/v1/tours',
-  tour: '/api/v1/tours/:id/:type?', //:type? - необязательный параметр
+  //tour: '/api/v1/tours/:id/:type?', //:type? - необязательный параметр
 };
 const toursPath = `${__dirname}/dev-data/data/tours.json`;
 
@@ -121,14 +121,17 @@ const deleteUser = (req, res) => {
 };
 
 // --------3 routes -------------------
+const userRouter = express.Router();
+const tourRouter = express.Router();
 
-app.route(routes.users).get(getAllUsers).post(createUser);
+userRouter.route('/').get(getAllUsers).post(createUser);
+userRouter.route('/:id').get(getUsersById).patch(updateUser).delete(deleteUser);
 
-app.route(routes.user).get(getUsersById).patch(updateUser).delete(deleteUser);
-
-app.route(routes.tours).get(getTours).post(createTour);
-
-app.route(routes.tour).get(getTourById).patch(updateTour).delete(deleteTour);
+tourRouter.route('/').get(getTours).post(createTour);
+tourRouter.route('/:id').get(getTourById).patch(updateTour).delete(deleteTour);
+// это middleware будет использовано только для указанного маршрута
+app.use(routes.users, userRouter);
+app.use(routes.tours, tourRouter);
 
 // --------4 start server -------------------
 app.listen(port, () => console.log(`server run on ${port} port ...`));
