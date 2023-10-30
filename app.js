@@ -4,11 +4,14 @@ const port = 3000;
 const routes = {
   home: '/',
   tours: '/api/v1/tours',
+  tour: '/api/v1/tours/:id/:type',
 };
+const toursPath = `${__dirname}/dev-data/data/tours.json`;
 
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours.json`));
+const tours = JSON.parse(fs.readFileSync(toursPath));
 
 const app = express();
+app.use(express.json());
 
 app.get(routes.tours, (req, res) => {
   res.status(200).json({
@@ -17,6 +20,21 @@ app.get(routes.tours, (req, res) => {
     data: {
       tours,
     },
+  });
+});
+
+app.post(routes.tours, (req, res) => {
+  const id = tours[tours.length - 1].id + 1;
+  const tour = { ...req.body, id };
+  tours.push(tour);
+
+  fs.writeFile(toursPath, JSON.stringify(tours), (err) => {
+    res.status(201).json({
+      status: 'success',
+      data: {
+        tour,
+      },
+    });
   });
 });
 
