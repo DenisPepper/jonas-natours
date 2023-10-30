@@ -13,7 +13,7 @@ const tours = JSON.parse(fs.readFileSync(toursPath));
 const app = express();
 app.use(express.json());
 
-app.get(routes.tours, (req, res) => {
+const getTours = (req, res) => {
   res.status(200).json({
     status: 'success',
     results: tours.length,
@@ -21,9 +21,9 @@ app.get(routes.tours, (req, res) => {
       tours,
     },
   });
-});
+};
 
-app.get(routes.tour, (req, res) => {
+const getTourById = (req, res) => {
   const { id, type } = req.params;
   const tour = tours.find((tour) => id === tour._id);
 
@@ -33,9 +33,9 @@ app.get(routes.tour, (req, res) => {
       tour,
     },
   });
-});
+};
 
-app.post(routes.tours, (req, res) => {
+const createTour = (req, res) => {
   const id = tours[tours.length - 1].id + 1;
   const tour = { ...req.body, id };
   tours.push(tour);
@@ -48,9 +48,9 @@ app.post(routes.tours, (req, res) => {
       },
     });
   });
-});
+};
 
-app.patch(routes.tour, (req, res) => {
+const updateTour = (req, res) => {
   const { id, type } = req.params;
   const tour = tours.find((tour) => id === tour._id);
 
@@ -65,9 +65,9 @@ app.patch(routes.tour, (req, res) => {
       tour: newtour,
     },
   });
-});
+};
 
-app.delete(routes.tour, (req, res) => {
+const deleteTour = (req, res) => {
   const { id, type } = req.params;
   const tour = tours.find((tour) => id === tour._id);
 
@@ -76,7 +76,16 @@ app.delete(routes.tour, (req, res) => {
   // delete tour from DB and send response without payload
 
   res.status(204);
-});
+};
+
+app.route(routes.tours)
+  .get(getTours)
+  .post(createTour);
+
+app.route(routes.tour)
+  .get(getTourById)
+  .patch(updateTour)
+  .delete(deleteTour);
 
 /* 
 app.get(routes.home, (req, res) => {
