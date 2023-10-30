@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const port = 3000;
 const routes = {
   home: '/',
+  users: '/api/v1/users',
+  user: '/api/v1/users/:id',
   tours: '/api/v1/tours',
   tour: '/api/v1/tours/:id/:type?', //:type? - необязательный параметр
 };
@@ -17,8 +19,8 @@ const app = express();
 
 app.use(express.json());
 
-// выводит в консоль инфо о запросах/ответах 
-app.use(morgan('dev'))
+// выводит в консоль инфо о запросах/ответах
+app.use(morgan('dev'));
 
 // мидлвара, которая добавляет время запроса
 app.use((req, res, next) => {
@@ -95,6 +97,10 @@ const deleteTour = (req, res) => {
 };
 
 // --------3 routes -------------------
+
+app.route(routes.users).get(getAllUsers).post(createUser);
+
+app.route(routes.user).get(getUsersById).patch(updateUser).delete(deleteUser);
 
 app.route(routes.tours).get(getTours).post(createTour);
 
