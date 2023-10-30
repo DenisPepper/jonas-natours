@@ -13,6 +13,7 @@ const app = express();
 app.get(routes.tours, (req, res) => {
   res.status(200).json({
     status: 'success',
+    results: tours.length,
     data: {
       tours,
     },
