@@ -17,11 +17,8 @@ const app = express();
 
 app.use(express.json());
 
-// пользовательское middleware
-app.use((req, res, next) => {
-  console.log('custom middleware');
-  next();
-});
+// выводит в консоль инфо о запросах/ответах 
+app.use(morgan('dev'))
 
 // мидлвара, которая добавляет время запроса
 app.use((req, res, next) => {
