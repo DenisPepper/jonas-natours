@@ -50,6 +50,21 @@ app.post(routes.tours, (req, res) => {
   });
 });
 
+app.patch(routes.tour, (req, res) => {
+  const { id, type } = req.params;
+  const tour = tours.find((tour) => id === tour._id);
+
+  if (!tour) return res.status(404).send('Invalid id');
+
+  // update tour in DB and send it back
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour,
+    },
+  });
+});
+
 /* 
 app.get(routes.home, (req, res) => {
   res.status(200).json({ message: 'welcome to home page', app: 'Natours app' });
