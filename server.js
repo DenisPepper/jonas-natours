@@ -4,10 +4,11 @@
 require('dotenv').config({ path: './config.env' });
 
 const app = require('./app');
+
 const port = process.env.PORT;
 
 app.listen(port, () =>
-  console.log(`server run on http://127.0.0.1:${port} ...`)
+  console.log(`server run on http://127.0.0.1:${port} ...`),
 );
 
 /* // переменные окружения node

@@ -1,5 +1,6 @@
 const express = require('express');
 const tourController = require('../controllers/tour-controller');
+
 const router = express.Router();
 
 // это middleware сработает для параметра id

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Learning node, express, mongoDB",
   "main": "app.js",
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "scripts": {
     "start:dev": "node server.js",
     "start:prod": "NODE_ENV=production node server.js",
