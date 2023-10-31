@@ -15,7 +15,12 @@ const app = express();
 
 // --------1 middleware -------------------
 
+//обрабатывает body
 app.use(express.json());
+
+// Обрабатывает статические файлы в указанной папке
+// http://127.0.0.1:3000/overview.html - откроет в браузере указанный ресурс из папки public
+app.use(express.static(`${__dirname}/public`));
 
 // выводит в консоль инфо о запросах/ответах
 app.use(morgan('dev'));
