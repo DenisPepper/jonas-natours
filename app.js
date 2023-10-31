@@ -22,8 +22,10 @@ app.use(express.json());
 // http://127.0.0.1:3000/overview.html - откроет в браузере указанный ресурс из папки public
 app.use(express.static(`${__dirname}/public`));
 
-// выводит в консоль инфо о запросах/ответах
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  // выводит в консоль инфо о запросах/ответах
+  app.use(morgan('dev'));
+}
 
 // мидлвара, которая добавляет время запроса
 app.use((req, res, next) => {
