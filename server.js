@@ -3,7 +3,17 @@
 // тогда process.env переменные из конфигурации будут доступны в любом модуле
 require('dotenv').config({ path: './config.env' });
 
+const mongoose = require('mongoose');
 const app = require('./app');
+
+mongoose
+  .connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('DB connection success...'));
 
 const port = process.env.PORT;
 
