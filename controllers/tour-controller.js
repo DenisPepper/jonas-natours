@@ -55,7 +55,27 @@ exports.createTour = async (req, res) => {
   }
 };
 
-exports.updateTour = (req, res) => {};
+exports.updateTour = async (req, res) => {
+  const { id } = req.params;
+  try {
+    // new: true - вернет обновленный документ, а не оригинал
+    const tour = await Tour.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.status(200).json({
+      status: 'success',
+      data: {
+        tour,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error,
+    });
+  }
+};
 
 exports.deleteTour = (req, res) => {};
 
