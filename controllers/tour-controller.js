@@ -20,7 +20,23 @@ exports.getTours = async (req, res) => {
   }
 };
 
-exports.getTourById = (req, res) => {};
+exports.getTourById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const tour = await Tour.findById(id);
+    res.status(200).json({
+      status: 'success',
+      data: {
+        tour,
+      },
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: 'error',
+      message: error,
+    });
+  }
+};
 
 exports.createTour = async (req, res) => {
   try {
