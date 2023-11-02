@@ -77,7 +77,18 @@ exports.updateTour = async (req, res) => {
   }
 };
 
-exports.deleteTour = (req, res) => {};
+exports.deleteTour = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Tour.findByIdAndDelete(id);
+    res.status(204).send();
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error,
+    });
+  }
+};
 
 /* 
 exports.checkId = (req, res, next, val) => {

@@ -22,7 +22,7 @@ content-type: application/json
 
 ###
 // delete tour by id
-DELETE http://127.0.0.1:3000/api/v1/tours/5c88fa8cf4afda39709c2955 HTTP/1.1
+DELETE http://127.0.0.1:3000/api/v1/tours/6543b9441e8f5b0734ae63bd HTTP/1.1
 
 ###
 // create a new tour
@@ -32,6 +32,6 @@ content-type: application/json
 {
   "price": 700,
   "rating": 6,
-  "name": "The Snow Adventurer"
+  "name": "Test test test"
 }
 
