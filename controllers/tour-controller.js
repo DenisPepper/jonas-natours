@@ -1,14 +1,4 @@
-const fs = require('fs');
-
-const toursPath = `${__dirname}/../dev-data/data/tours.json`;
-const tours = JSON.parse(fs.readFileSync(toursPath));
-
-exports.checkId = (req, res, next, val) => {
-  const id = val;
-  const tour = tours.find((item) => id === item._id);
-  if (!tour) return res.status(404).send('Invalid id');
-  next();
-};
+const Tour = require('../models/tour-model');
 
 exports.checkBodyProps = (req, res, next) => {
   const { name, price } = req.body;
@@ -77,3 +67,12 @@ exports.deleteTour = (req, res) => {
   // delete tour from DB and send response without payload
   res.status(204);
 };
+
+/* 
+exports.checkId = (req, res, next, val) => {
+  const id = val;
+  const tour = tours.find((item) => id === item._id);
+  if (!tour) return res.status(404).send('Invalid id');
+  next();
+};
+ */
