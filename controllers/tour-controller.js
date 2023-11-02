@@ -2,7 +2,23 @@ const Tour = require('../models/tour-model');
 
 const tours = [];
 
-exports.getTours = (req, res) => {};
+exports.getTours = async (req, res) => {
+  try {
+    const toursList = await Tour.find();
+    res.status(200).json({
+      status: 'success',
+      results: toursList.length,
+      data: {
+        tours: toursList,
+      },
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: 'error',
+      message: error,
+    });
+  }
+};
 
 exports.getTourById = (req, res) => {};
 
