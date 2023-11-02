@@ -20,7 +20,7 @@ const tourSchema = new mongoose.Schema({
   ratingsQuantity: { type: Number, default: 0 },
   price: { type: Number, required: [true, 'Tour must have a price'] },
   priceDiscount: Number,
-  summery: {
+  summary: {
     type: String,
     trim: true,
     required: [true, 'Tour must have a summery'],
