@@ -1,64 +1,31 @@
 const Tour = require('../models/tour-model');
 
-exports.getTours = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    time: req.time,
-    results: tours.length,
-    data: {
-      tours,
-    },
-  });
-};
+const tours = [];
 
-exports.getTourById = (req, res) => {
-  const { id, type } = req.params;
-  const tour = tours.find((item) => id === item._id);
+exports.getTours = (req, res) => {};
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour,
-    },
-  });
-};
+exports.getTourById = (req, res) => {};
 
-exports.createTour = (req, res) => {
-  const id = tours[tours.length - 1].id + 1;
-  const tour = { ...req.body, id };
-  tours.push(tour);
-
-  fs.writeFile(toursPath, JSON.stringify(tours), (err) => {
+exports.createTour = async (req, res) => {
+  try {
+    const tour = await Tour.create(req.body);
     res.status(201).json({
       status: 'success',
       data: {
         tour,
       },
     });
-  });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error,
+    });
+  }
 };
 
-exports.updateTour = (req, res) => {
-  const { id, type } = req.params;
-  const tour = tours.find((item) => id === item._id);
+exports.updateTour = (req, res) => {};
 
-  const newtour = { ...tour, ...req.body };
-  // update tour in DB and send it back
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour: newtour,
-    },
-  });
-};
-
-exports.deleteTour = (req, res) => {
-  //const { id, type } = req.params;
-  //const tour = tours.find((item) => id === item._id);
-  // delete tour from DB and send response without payload
-  res.status(204);
-};
+exports.deleteTour = (req, res) => {};
 
 /* 
 exports.checkId = (req, res, next, val) => {
