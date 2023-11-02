@@ -6,10 +6,8 @@ const router = express.Router();
 // это middleware сработает для параметра id
 //router.param('id', tourController.checkId);
 
-router
-  .route('/')
-  .get(tourController.getTours)
-  .post(tourController.checkBodyProps, tourController.createTour);
+router.route('/').get(tourController.getTours).post(tourController.createTour);
+//.post(tourController.checkBodyProps, tourController.createTour);
 
 router
   .route('/:id')

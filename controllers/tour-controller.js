@@ -1,13 +1,5 @@
 const Tour = require('../models/tour-model');
 
-exports.checkBodyProps = (req, res, next) => {
-  const { name, price } = req.body;
-
-  if (!name || !price) return res.status(400).send('Invalid name or price');
-
-  next();
-};
-
 exports.getTours = (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -76,3 +68,11 @@ exports.checkId = (req, res, next, val) => {
   next();
 };
  */
+
+/* exports.checkBodyProps = (req, res, next) => {
+  const { name, price } = req.body;
+
+  if (!name || !price) return res.status(400).send('Invalid name or price');
+
+  next();
+}; */
