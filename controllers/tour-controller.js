@@ -3,8 +3,10 @@ const Tour = require('../models/tour-model');
 const tours = [];
 
 exports.getTours = async (req, res) => {
+  const { query } = req;
+
   try {
-    const toursList = await Tour.find();
+    const toursList = await Tour.find(query);
     res.status(200).json({
       status: 'success',
       results: toursList.length,
