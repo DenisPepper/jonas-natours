@@ -1,12 +1,24 @@
 const Tour = require('../models/tour-model');
 
+const queryPatterns = ['gte', 'gt', 'lte', 'lt'];
+
 exports.getTours = async (req, res) => {
+  // --> BUILD QUERY
+  // 1 Filtering
   const queryObj = { ...req.query };
   const excludedKeys = ['page', 'sort', 'limit', 'fields'];
   excludedKeys.forEach((key) => delete queryObj[key]);
+  // 2 Advanced filtering
+  let queryString = JSON.stringify(queryObj);
+  queryPatterns.forEach((pattern) => {
+    const regExp = new RegExp(`\\b${pattern}\\b`, 'g');
+    queryString = queryString.replace(regExp, `$${pattern}`);
+  });
+  const query = Tour.find(JSON.parse(queryString));
+  // <-- BUILD QUERY
 
   try {
-    const toursList = await Tour.find(queryObj);
+    const toursList = await query;
     res.status(200).json({
       status: 'success',
       results: toursList.length,
