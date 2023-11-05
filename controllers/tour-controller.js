@@ -4,11 +4,11 @@ const queryPatterns = ['gte', 'gt', 'lte', 'lt'];
 
 exports.getTours = async (req, res) => {
   // --> BUILD QUERY
-  // 1 Filtering
+  // 1.1 Filtering
   const queryObj = { ...req.query };
   const excludedKeys = ['page', 'sort', 'limit', 'fields'];
   excludedKeys.forEach((key) => delete queryObj[key]);
-  // 2 Advanced filtering
+  // 1.2 Advanced filtering
   let queryString = JSON.stringify(queryObj);
   const patterns = queryPatterns.reduce(
     (acc, pattern, index) =>
@@ -19,7 +19,11 @@ exports.getTours = async (req, res) => {
     new RegExp(patterns, 'g'),
     (match) => `$${match}`,
   );
-  const query = Tour.find(JSON.parse(queryString));
+  let query = Tour.find(JSON.parse(queryString));
+
+  // 2 Sorting
+  query = query.sort(req.query.sort);
+
   // <-- BUILD QUERY
 
   try {

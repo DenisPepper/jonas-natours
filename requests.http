@@ -6,8 +6,12 @@ GET http://127.0.0.1:3000/api/v1/users/ HTTP/1.1
 GET http://127.0.0.1:3000/api/v1/tours/?difficulty=easy&duration=5 HTTP/1.1
 ###
 
-// get tours by filters gte
-GET http://127.0.0.1:3000/api/v1/tours/?difficulty=easy&duration[gte]=5 HTTP/1.1
+// get tours by filters gte & sorting
+GET http://127.0.0.1:3000/api/v1/tours/?duration[gte]=5&sort=duration HTTP/1.1
+###
+
+// get tours by filters gte & sorting reverse
+GET http://127.0.0.1:3000/api/v1/tours/?duration[gte]=5&sort=-duration HTTP/1.1
 ###
 
 // get all tours
