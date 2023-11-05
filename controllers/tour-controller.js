@@ -2,6 +2,13 @@ const Tour = require('../models/tour-model');
 
 const queryPatterns = ['gte', 'gt', 'lte', 'lt'];
 
+exports.aliasTopTours = (req, res, next) => {
+  req.query.limit = 5;
+  req.query.sort = '-ratingsAverage,price';
+  req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
+  next();
+};
+
 exports.getTours = async (req, res) => {
   // --> BUILD QUERY
   // 1.1 Filtering
