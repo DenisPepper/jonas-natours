@@ -10,10 +10,15 @@ exports.getTours = async (req, res) => {
   excludedKeys.forEach((key) => delete queryObj[key]);
   // 2 Advanced filtering
   let queryString = JSON.stringify(queryObj);
-  queryPatterns.forEach((pattern) => {
-    const regExp = new RegExp(`\\b${pattern}\\b`, 'g');
-    queryString = queryString.replace(regExp, `$${pattern}`);
-  });
+  const patterns = queryPatterns.reduce(
+    (acc, pattern, index) =>
+      `${acc}${pattern}${index < queryPatterns.length - 1 ? '|' : ')\\b'}`,
+    '\\b(',
+  );
+  queryString = queryString.replace(
+    new RegExp(patterns, 'g'),
+    (match) => `$${match}`,
+  );
   const query = Tour.find(JSON.parse(queryString));
   // <-- BUILD QUERY
 

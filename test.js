@@ -1,5 +1,13 @@
 const queryPatterns = ['gte', 'gt', 'lte', 'lt'];
 
+const regExpString = queryPatterns.reduce(
+  (acc, pattern, index) =>
+    `${acc}${pattern}${index < queryPatterns.length - 1 ? '|' : ')\\b'}`,
+  '\\b(',
+);
+const regExp2 = new RegExp(regExpString, 'g');
+console.log(regExp2);
+
 const obj = {
   difficulty: 'easy',
   duration: { gte: 5, lte: 5, gt: 5, lt: 5 },
@@ -8,14 +16,5 @@ const obj = {
 
 let queryString = JSON.stringify(obj);
 
-/* const gte = 'gte';
-const p = `\\b${gte}\\b`;
-const reg = new RegExp(p, 'g');
-console.log(queryString.replace(reg, '$gte')); */
-
-queryPatterns.forEach((pattern) => {
-  const regExp = new RegExp(`\\b${pattern}\\b`, 'g');
-  queryString = queryString.replace(regExp, `$${pattern}`);
-});
-
+queryString = queryString.replace(regExp2, (match) => `$${match}`);
 console.log(queryString);
