@@ -1,6 +1,5 @@
 const Tour = require('../models/tour-model');
-
-const queryPatterns = ['gte', 'gt', 'lte', 'lt'];
+const APIFeatures = require('../utils/api-features');
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = 5;
@@ -10,54 +9,14 @@ exports.aliasTopTours = (req, res, next) => {
 };
 
 exports.getTours = async (req, res) => {
-  // --> BUILD QUERY
-  // 1.1 Filtering
-  const queryObj = { ...req.query };
-  const excludedKeys = ['page', 'sort', 'limit', 'fields'];
-  excludedKeys.forEach((key) => delete queryObj[key]);
-  // 1.2 Advanced filtering
-  let queryString = JSON.stringify(queryObj);
-  const patterns = queryPatterns.reduce(
-    (acc, pattern, index) =>
-      `${acc}${pattern}${index < queryPatterns.length - 1 ? '|' : ')\\b'}`,
-    '\\b(',
-  );
-  queryString = queryString.replace(
-    new RegExp(patterns, 'g'),
-    (match) => `$${match}`,
-  );
-  let query = Tour.find(JSON.parse(queryString));
-
-  // 2 Sorting
-  if (req.query.sort) {
-    const sortBy = req.query.sort.split(',').join(' ');
-    query = query.sort(sortBy);
-  } else {
-    query = query.sort('-createdAt'); // default sorting
-  }
-
-  // 3 fields limiting
-  if (req.query.fields) {
-    const fields = req.query.fields.split(',').join(' ');
-    query = query.select(fields);
-  } else {
-    query = query.select('-__v'); // default excluded fields
-  }
-
-  // pagination
-  const page = Number(req.query.page) || 1;
-  const limit = Number(req.query.limit) || 10;
-  query = query.skip((page - 1) * limit).limit(limit);
-  if (req.query.page) {
-    const toursCount = await Tour.countDocuments();
-    if ((page - 1) * limit >= toursCount)
-      throw new Error('This page does not exists!');
-  }
-  // query.sort().select().skip().limit()
-  // <-- BUILD QUERY
+  const features = new APIFeatures(Tour.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
 
   try {
-    const toursList = await query;
+    const toursList = await features.query;
     res.status(200).json({
       status: 'success',
       results: toursList.length,
