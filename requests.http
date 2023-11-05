@@ -2,6 +2,10 @@
 GET http://127.0.0.1:3000/api/v1/users/ HTTP/1.1
 ###
 
+// get tours by pages & limits (pagination)
+GET http://127.0.0.1:3000/api/v1/tours/?page=3&limit=4&fields=name,price HTTP/1.1
+###
+
 // get tours by fields
 GET http://127.0.0.1:3000/api/v1/tours/?fields=name,price HTTP/1.1
 ###
