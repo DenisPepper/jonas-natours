@@ -2,6 +2,10 @@
 GET http://127.0.0.1:3000/api/v1/users/ HTTP/1.1
 ###
 
+// get tour stats
+GET http://127.0.0.1:3000/api/v1/tours/tour-stats HTTP/1.1
+###
+
 // get 5 cheap
 GET http://127.0.0.1:3000/api/v1/tours/top-5-cheap HTTP/1.1
 ###

@@ -102,19 +102,29 @@ exports.deleteTour = async (req, res) => {
   }
 };
 
-/* 
-exports.checkId = (req, res, next, val) => {
-  const id = val;
-  const tour = tours.find((item) => id === item._id);
-  if (!tour) return res.status(404).send('Invalid id');
-  next();
+exports.getTourStats = async (req, res) => {
+  try {
+    const stats = Tour.aggregate([
+      { $match: { ratingsAverage: { $gte: 4.5 } } },
+      {
+        $group: {
+          _id: null,
+          avgRating: { $avg: '$ratingsAverage' },
+          avgPrice: { $avg: '$price' },
+          minPrice: { $min: '$price' },
+          maxPrice: { $max: '$price' },
+        },
+      },
+      { $sort: { avgPrice: 1 } },
+    ]);
+    res.status(200).json({
+      status: 'success',
+      data: stats,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error,
+    });
+  }
 };
- */
-
-/* exports.checkBodyProps = (req, res, next) => {
-  const { name, price } = req.body;
-
-  if (!name || !price) return res.status(400).send('Invalid name or price');
-
-  next();
-}; */
