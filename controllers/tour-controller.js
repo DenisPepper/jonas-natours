@@ -73,7 +73,7 @@ exports.updateTour = async (req, res) => {
     // new: true - вернет обновленный документ, а не оригинал
     const tour = await Tour.findByIdAndUpdate(id, req.body, {
       new: true,
-      runValidators: true,
+      runValidators: true, // включет валидацию при обновлении документа
     });
     res.status(200).json({
       status: 'success',
