@@ -41,6 +41,10 @@ const tourSchema = new mongoose.Schema({
 
 const Tour = mongoose.model('Tour', tourSchema);
 
+tourSchema.virtual('durationWeeks').get(function () {
+  return this.duration / 7;
+}); //виртуальное поле, которого не будет в БД, но будет в результате запроса
+
 module.exports = Tour;
 
 // trim: true - mongo будет тримить с обоих сторон строковые значения
