@@ -14,14 +14,15 @@ const sendError = (err, res) => {
       status: err.status,
       message: err.message,
     });
-  } else {
-    // unknow programming error
-    console.error('programming error!🐸', err);
-    res.status(500).json({
-      status: 'error',
-      message: 'Something went wrong!',
-    });
+    return;
   }
+
+  // unknow programming error
+  console.error('unknow programming error!🐸', err);
+  res.status(500).json({
+    status: 'error',
+    message: 'Something went wrong!',
+  });
 };
 
 const globalErrorHandler = (err, req, res, next) => {
