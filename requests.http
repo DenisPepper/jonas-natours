@@ -76,6 +76,7 @@ content-type: application/json
   "summary": "Test",
   "description": "Test.",
   "imageCover": "tour-2-cover.jpg",
-  "isSecret": true
+  "isSecret": true,
+  "ratingsAverage":0
 }
 
