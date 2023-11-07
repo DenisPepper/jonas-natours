@@ -10,7 +10,7 @@ exports.aliasTopTours = (req, res, next) => {
   next();
 };
 
-exports.getTours = handleAsync(async (req, res) => {
+exports.getTours = handleAsync(async (req, res, next) => {
   const features = new APIFeatures(Tour.find(), req.query)
     .filter()
     .sort()
@@ -27,11 +27,11 @@ exports.getTours = handleAsync(async (req, res) => {
   });
 });
 
-exports.getTourById = handleAsync(async (req, res) => {
+exports.getTourById = handleAsync(async (req, res, next) => {
   const { id } = req.params;
   const tour = await Tour.findById(id);
 
-  if (!tour) throw new AppError(`tour with id{${id}} - not found`, 404);
+  if (!tour) next(new AppError(`tour with id{${id}} - not found`, 404));
 
   res.status(200).json({
     status: 'success',
@@ -41,7 +41,7 @@ exports.getTourById = handleAsync(async (req, res) => {
   });
 });
 
-exports.createTour = handleAsync(async (req, res) => {
+exports.createTour = handleAsync(async (req, res, next) => {
   const tour = await Tour.create(req.body);
   res.status(201).json({
     status: 'success',
@@ -51,13 +51,16 @@ exports.createTour = handleAsync(async (req, res) => {
   });
 });
 
-exports.updateTour = handleAsync(async (req, res) => {
+exports.updateTour = handleAsync(async (req, res, next) => {
   const { id } = req.params;
   // new: true - вернет обновленный документ, а не оригинал
   const tour = await Tour.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true, // включет валидацию при обновлении документа
   });
+
+  if (!tour) next(new AppError(`tour with id{${id}} - not found`, 404));
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -66,13 +69,16 @@ exports.updateTour = handleAsync(async (req, res) => {
   });
 });
 
-exports.deleteTour = handleAsync(async (req, res) => {
+exports.deleteTour = handleAsync(async (req, res, next) => {
   const { id } = req.params;
-  await Tour.findByIdAndDelete(id);
+  const tour = await Tour.findByIdAndDelete(id);
+
+  if (!tour) next(new AppError(`tour with id{${id}} - not found`, 404));
+
   res.status(204).send();
 });
 
-exports.getTourStats = handleAsync(async (req, res) => {
+exports.getTourStats = handleAsync(async (req, res, next) => {
   const stats = await Tour.aggregate([
     { $match: { ratingsAverage: { $gte: 4.5 } } },
     {
@@ -92,7 +98,7 @@ exports.getTourStats = handleAsync(async (req, res) => {
   });
 });
 
-exports.getMonthlyPlan = handleAsync(async (req, res) => {
+exports.getMonthlyPlan = handleAsync(async (req, res, next) => {
   const year = Number(req.params.year);
   const plan = await Tour.aggregate([
     { $unwind: '$startDates' },
