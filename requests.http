@@ -68,8 +68,13 @@ POST http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
 content-type: application/json
 
 {
-  "price": 700,
-  "rating": 6,
-  "name": "Test test test"
+  "name": "Test 333",
+  "duration": 7,
+  "maxGroupSize": 15,
+  "difficulty": "medium",
+  "price": 1015,
+  "summary": "Test",
+  "description": "Test.",
+  "imageCover": "tour-2-cover.jpg"
 }
 

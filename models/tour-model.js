@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const tourSchema = new mongoose.Schema(
   {
@@ -38,16 +39,24 @@ const tourSchema = new mongoose.Schema(
     images: [String],
     createdAt: { type: Date, default: Date.now(), select: false },
     startDates: [Date],
+    slug: String,
   },
   { toJSON: { virtuals: true } },
   { toObject: { virtuals: true } },
 );
 
-const Tour = mongoose.model('Tour', tourSchema);
-
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 }); //виртуальное поле, которого не будет в БД, но будет в результате запроса
+
+// подписка на событие перед save() и create()
+tourSchema.pre('save', function (next) {
+  // this - это документ, который сохраняется
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
 
