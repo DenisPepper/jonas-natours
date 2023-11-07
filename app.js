@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const AppError = require('./utils/app-error');
+const globalErrorHandler = require('./controllers/error-controller');
 const tourRouter = require('./routes/tour-routes');
 const userRouter = require('./routes/user-routes');
 
@@ -47,14 +48,6 @@ app.all('*', (req, res, next) => {
 
 // если express передать обработчик с 4-мя параметрами, то он автоматически будет вызываться
 // как обработчик ошибок
-app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.status = err.status || 'error';
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-  });
-  next();
-});
+app.use(globalErrorHandler);
 
 module.exports = app;
