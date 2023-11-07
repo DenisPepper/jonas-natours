@@ -142,6 +142,13 @@ exports.getMonthlyPlan = async (req, res) => {
           },
         },
       },
+      {
+        $group: {
+          _id: { $month: '$startDates' },
+          toursCount: { $sum: 1 },
+          tours: { $push: '$name' },
+        },
+      },
     ]);
     res.status(200).json({
       status: 'success',
