@@ -32,7 +32,16 @@ const tourSchema = new mongoose.Schema(
     },
     ratingsQuantity: { type: Number, default: 0 },
     price: { type: Number, required: [true, 'Tour must have a price'] },
-    priceDiscount: Number,
+    priceDiscount: {
+      type: Number,
+      validate: {
+        validator: function (value) {
+          // this - только при создании, не работает при обновлении
+          return value < this.price;
+        },
+        message: 'Discount must be < price',
+      },
+    },
     summary: {
       type: String,
       trim: true,
