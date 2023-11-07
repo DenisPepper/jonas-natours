@@ -128,3 +128,21 @@ exports.getTourStats = async (req, res) => {
     });
   }
 };
+
+exports.getMonthlyPlan = async (req, res) => {
+  const year = Number(req.params.year);
+  try {
+    const plan = await Tour.aggregate([{ $unwind: '$startDates' }]);
+    res.status(200).json({
+      status: 'success',
+      data: plan,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: error,
+    });
+  }
+};
+// { $unwind: '$startDates' }, startDates - массив, 
+// $unwind - создаст количество документов, равное числу элементов массива
