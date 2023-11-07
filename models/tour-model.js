@@ -49,7 +49,7 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 }); //виртуальное поле, которого не будет в БД, но будет в результате запроса
 
-// подписка на событие перед save() и create()
+/* // подписка на событие перед save() и create()
 tourSchema.pre('save', function (next) {
   // this - это документ, который сохраняется
   this.slug = slugify(this.name, { lower: true });
@@ -60,7 +60,7 @@ tourSchema.pre('save', function (next) {
 tourSchema.pre('save', function (doc, next) {
   this.slug = slugify(this.name, { lower: true });
   next();
-});
+}); */
 
 const Tour = mongoose.model('Tour', tourSchema);
 
