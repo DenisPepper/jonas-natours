@@ -97,6 +97,10 @@ tourSchema.post(/^find/, function (docs, next) {
   console.log(`query time is: ${Date.now() - this.customKey} ms`);
   next();
 }); */
+tourSchema.pre(/^find/, function (next) {
+  this.find({ isSecret: { $ne: true } });
+  next();
+});
 
 //AGGREGATION MIDDLEWARE
 tourSchema.pre('aggregate', function (next) {
