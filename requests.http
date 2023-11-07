@@ -3,7 +3,7 @@ GET http://127.0.0.1:3000/api/v1/users/ HTTP/1.1
 ###
 
 // get tour s monthly plan
-GET http://127.0.0.1:3000/api/v1/tours/monthly-plan/2021 HTTP/1.1
+GET http://127.0.0.1:3000/api/v1/tours/monthly-plan/2022 HTTP/1.1
 ###
 
 // get tour stats
