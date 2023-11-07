@@ -56,6 +56,12 @@ tourSchema.pre('save', function (next) {
   next();
 });
 
+// подписка на событие после save() и create()
+tourSchema.pre('save', function (doc, next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
