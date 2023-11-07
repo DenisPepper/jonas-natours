@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const AppError = require('./utils/app-error');
 const tourRouter = require('./routes/tour-routes');
 const userRouter = require('./routes/user-routes');
 
@@ -40,10 +41,20 @@ app.use(routes.tours, tourRouter);
 //Обработка ошибок, связаных с вводом недействительных url-адресов
 // сработает для всех методов
 app.all('*', (req, res, next) => {
-  res.status(404).json({
-    status: 'error',
-    message: `rout: ${req.url} - not found!`,
+  // если в next() передать аргумент, то он будет автоматически распознан как ошибка
+  next(new AppError(`rout: ${req.url} - not found!`, 404));
+});
+
+// если express передать обработчик с 4-мя параметрами, то он автоматически будет вызываться
+// как обработчик ошибок
+app.use((err, req, res, next) => {
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || 'error';
+  res.status(err.statusCode).json({
+    status: err.status,
+    message: err.message,
   });
+  next();
 });
 
 module.exports = app;
