@@ -7,9 +7,10 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start:dev": "node server.js",
-    "start:prod": "NODE_ENV=production node server.js",
-    "start:prod:windows": "SET NODE_ENV=production & node server.js"
+    "debug": "ndb server.js",
+    "start": "node server.js",
+    "prod": "NODE_ENV=production node server.js",
+    "prod:windows": "SET NODE_ENV=production & node server.js"
   },
   "repository": {
     "type": "git",
