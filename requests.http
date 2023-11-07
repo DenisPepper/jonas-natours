@@ -73,10 +73,10 @@ content-type: application/json
   "description": "Test.",
   "imageCover": "tour-2-cover.jpg",
   "isSecret": true,
-  "ratingsAverage":0
+  "ratingsAverage":5
 }
 ###
 
 // get tour by id
-GET http://127.0.0.1:3000/api/v1/tours/654a00d3fa63bf46ac976f7d HTTP/1.1
+GET http://127.0.0.1:3000/api/v1/tours/51515151654a00d3fa63bf46ac976f7d HTTP/1.1
 ###

@@ -8,20 +8,20 @@ const sendErrorDev = (err, res) => {
 };
 
 const sendError = (err, res) => {
-  if (err.isOperational) {
-    //trusted operational app error
-    res.status(err.statusCode).json({
-      status: err.status,
-      message: err.message,
+  // unknow programming error
+  if (!err.isOperational) {
+    console.error('unknow programming error!🐸', err);
+    res.status(500).json({
+      status: 'error',
+      message: 'Something went wrong!',
     });
     return;
   }
 
-  // unknow programming error
-  console.error('unknow programming error!🐸', err);
-  res.status(500).json({
-    status: 'error',
-    message: 'Something went wrong!',
+  //trusted operational app error
+  res.status(err.statusCode).json({
+    status: err.status,
+    message: err.message,
   });
 };
 
