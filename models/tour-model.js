@@ -40,6 +40,7 @@ const tourSchema = new mongoose.Schema(
     createdAt: { type: Date, default: Date.now(), select: false },
     startDates: [Date],
     slug: String,
+    isSecret: { type: Boolean, default: false },
   },
   { toJSON: { virtuals: true } },
   { toObject: { virtuals: true } },
@@ -49,6 +50,7 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 }); //виртуальное поле, которого не будет в БД, но будет в результате запроса
 
+// SAVE NEW DOC MIDDLEWARE
 /* // подписка на событие перед save() и create()
 tourSchema.pre('save', function (next) {
   // this - это документ, который сохраняется
@@ -61,6 +63,14 @@ tourSchema.pre('save', function (doc, next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 }); */
+
+// QUERY MIDDLEWARE
+// eslint-disable-next-line prefer-arrow-callback
+tourSchema.pre(/^find/, function (next) {
+  // this - это запрос, который выполняется
+  this.find({ isSecret: { $ne: true } });
+  next();
+});
 
 const Tour = mongoose.model('Tour', tourSchema);
 

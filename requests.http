@@ -47,7 +47,7 @@ GET http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
 ###
 
 // get tour by id
-GET http://127.0.0.1:3000/api/v1/tours/6543739ec9eeab4bdc73c81e HTTP/1.1
+GET http://127.0.0.1:3000/api/v1/tours/654a00d3fa63bf46ac976f7d HTTP/1.1
 
 ###
 // patch tour by id
@@ -68,13 +68,14 @@ POST http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
 content-type: application/json
 
 {
-  "name": "Test 333",
+  "name": "Test Secret",
   "duration": 7,
   "maxGroupSize": 15,
   "difficulty": "medium",
   "price": 1015,
   "summary": "Test",
   "description": "Test.",
-  "imageCover": "tour-2-cover.jpg"
+  "imageCover": "tour-2-cover.jpg",
+  "isSecret": true
 }
 
