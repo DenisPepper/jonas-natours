@@ -65,10 +65,16 @@ tourSchema.pre('save', function (doc, next) {
 }); */
 
 // QUERY MIDDLEWARE
-// eslint-disable-next-line prefer-arrow-callback
+/* eslint-disable prefer-arrow-callback */
 tourSchema.pre(/^find/, function (next) {
   // this - это запрос, который выполняется
   this.find({ isSecret: { $ne: true } });
+  next();
+  this.customKey = Date.now();
+});
+
+tourSchema.post(/^find/, function (docs, next) {
+  console.log(`query time is: ${Date.now() - this.customKey} ms`);
   next();
 });
 
