@@ -31,7 +31,10 @@ exports.getTourById = handleAsync(async (req, res, next) => {
   const { id } = req.params;
   const tour = await Tour.findById(id);
 
-  if (!tour) next(new AppError(`tour with id{${id}} - not found`, 404));
+  if (!tour) {
+    next(new AppError(`tour with id{${id}} - not found`, 404));
+    return;
+  }
 
   res.status(200).json({
     status: 'success',
@@ -59,7 +62,10 @@ exports.updateTour = handleAsync(async (req, res, next) => {
     runValidators: true, // включет валидацию при обновлении документа
   });
 
-  if (!tour) next(new AppError(`tour with id{${id}} - not found`, 404));
+  if (!tour) {
+    next(new AppError(`tour with id{${id}} - not found`, 404));
+    return;
+  }
 
   res.status(200).json({
     status: 'success',
@@ -73,7 +79,10 @@ exports.deleteTour = handleAsync(async (req, res, next) => {
   const { id } = req.params;
   const tour = await Tour.findByIdAndDelete(id);
 
-  if (!tour) next(new AppError(`tour with id{${id}} - not found`, 404));
+  if (!tour) {
+    next(new AppError(`tour with id{${id}} - not found`, 404));
+    return;
+  }
 
   res.status(204).send();
 });
