@@ -1,5 +1,6 @@
 const Tour = require('../models/tour-model');
 const APIFeatures = require('../utils/api-features');
+const handleAsync = require('../utils/handle-async');
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = 5;
@@ -50,22 +51,15 @@ exports.getTourById = async (req, res) => {
   }
 };
 
-exports.createTour = async (req, res) => {
-  try {
-    const tour = await Tour.create(req.body);
-    res.status(201).json({
-      status: 'success',
-      data: {
-        tour,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'error',
-      message: error,
-    });
-  }
-};
+exports.createTour = handleAsync(async (req, res, next) => {
+  const tour = await Tour.create(req.body);
+  res.status(201).json({
+    status: 'success',
+    data: {
+      tour,
+    },
+  });
+});
 
 exports.updateTour = async (req, res) => {
   const { id } = req.params;
