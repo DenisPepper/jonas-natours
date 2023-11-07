@@ -66,7 +66,7 @@ tourSchema.pre('save', function (doc, next) {
 
 // QUERY MIDDLEWARE
 /* eslint-disable prefer-arrow-callback */
-tourSchema.pre(/^find/, function (next) {
+/* tourSchema.pre(/^find/, function (next) {
   // this - это запрос, который выполняется
   this.find({ isSecret: { $ne: true } });
   next();
@@ -75,6 +75,14 @@ tourSchema.pre(/^find/, function (next) {
 
 tourSchema.post(/^find/, function (docs, next) {
   console.log(`query time is: ${Date.now() - this.customKey} ms`);
+  next();
+}); */
+
+//AGGREGATION MIDDLEWARE
+tourSchema.pre('aggregate', function (next) {
+  // this - это агрегация
+  // исключит секретные туры
+  this.pipeline().unshift({ $match: { isSecret: { $ne: true } } });
   next();
 });
 
