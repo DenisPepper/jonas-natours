@@ -17,13 +17,14 @@ mongoose
 
 const port = process.env.PORT;
 
-app.listen(port, () =>
+const server = app.listen(port, () =>
   console.log(`server run on http://127.0.0.1:${port} ...`),
 );
 
-/* // переменные окружения node
-console.log(process.env);
-
-// переменные окружения express
-console.log(app.get('env'));
- */
+// добавит обработчик для перехвата отклоненных промисов,
+// например при неудачном подключении к DB
+process.on('unhandledRejection', (err) => {
+  console.log(`unhandled rejection: ${err.name}, ${err.message}`);
+  //останавливаем сервер, завершаяя все полученные запросы и останавливаем выполнение программы с кодом 1
+  server.close(() => process.exit(1));
+});
