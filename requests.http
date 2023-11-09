@@ -1,3 +1,15 @@
+// create a new user
+POST http://127.0.0.1:3000/api/v1/users/signup HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Denis Pepper",
+  "email": "denis_pepper@vk.com",
+  "password": "pass123456",
+  "passwordConfirm": "pass123456"
+}
+###
+
 // get all users
 GET http://127.0.0.1:3000/api/v1/users/ HTTP/1.1
 ###
