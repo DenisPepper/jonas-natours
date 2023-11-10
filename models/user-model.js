@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcript = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -42,6 +43,16 @@ const userSchema = new mongoose.Schema({
       message: 'password not valid',
     },
   },
+});
+
+userSchema.pre('save', async function (next) {
+  //если пароль не был изменен, то шифровать не надо
+  if (!this.isModified('password')) return next();
+
+  //если пароль был изменен, то вызываем функцию хеширования
+  this.password = await bcript.hash(this.password, 12);
+  this.passwordConfirm = undefined;
+  next();
 });
 
 const User = mongoose.model('User', userSchema);
