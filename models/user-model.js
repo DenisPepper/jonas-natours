@@ -4,7 +4,6 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'User must have a name'],
-    unique: true,
     trim: true,
     maxlength: [100, 'User name must be <= 100 chars'],
     minlength: [3, 'User name must be >= 3 chars'],
@@ -13,6 +12,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'User must have an email'],
     trim: true,
+    unique: true,
     lowercase: true,
     validate: {
       validator: function (value) {
@@ -34,6 +34,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Confirm password'],
     trim: true,
+    validate: {
+      validator: function (value) {
+        // this - только при создании (only on create and save), не работает при обновлении
+        return value === this.password;
+      },
+      message: 'password not valid',
+    },
   },
 });
 
