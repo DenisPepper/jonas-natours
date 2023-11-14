@@ -54,6 +54,7 @@ exports.login = handleAsync(async (req, res, next) => {
   });
 });
 
+// TODO: протестировать этот метод на отказ, когда будет реализован роут для смены пароля
 exports.protect = handleAsync(async (req, res, next) => {
   // получаем токен и проверяем его поддлинность
   let token = '';
