@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
     maxlength: [100, 'User pass must be <= 100 chars'],
     minlength: [3, 'User pass must be >= 8 chars'],
+    select: false, //исключит поле из результата выборки
   },
   passwordConfirm: {
     type: String,
@@ -54,6 +55,14 @@ userSchema.pre('save', async function (next) {
   this.passwordConfirm = undefined;
   next();
 });
+
+//определит для модели пользователя метод для проверки введенного пароля
+userSchema.methods.checkPassword = async function (
+  incomingPassword,
+  userPassword,
+) {
+  return await bcript.compare(incomingPassword, userPassword);
+};
 
 const User = mongoose.model('User', userSchema);
 

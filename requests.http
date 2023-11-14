@@ -10,6 +10,16 @@ content-type: application/json
 }
 ###
 
+// login
+POST http://127.0.0.1:3000/api/v1/users/login HTTP/1.1
+content-type: application/json
+
+{
+  "email": "denis_pepper@vk.com",
+  "password": "pass123456"
+}
+###
+
 // get all users
 GET http://127.0.0.1:3000/api/v1/users/ HTTP/1.1
 ###
