@@ -74,7 +74,9 @@ exports.protect = handleAsync(async (req, res, next) => {
     '+passwordChangedAt',
   );
   if (!user || user.hasBeenChangedPasswordAfterToken(verifiedToken.iat))
-    return next(new AppError('Your token is not valid!', 401));
+    return next(
+      new AppError('Your token is not valid! You must authorize', 401),
+    );
 
   next();
 });

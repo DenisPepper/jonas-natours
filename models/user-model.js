@@ -68,8 +68,10 @@ userSchema.methods.comparePasswords = async function (
   return await bcript.compare(incomingPassword, userPassword);
 };
 
-//сработает после выборки
-//определит для модели пользователя метод для проверки смены пароля
+// сработает после выборки
+// определит для модели пользователя метод сравнения даты последней смены пароля
+// с датой подписи токена, который передает клиент
+// после смены пароля - токен считается невалидным
 userSchema.methods.hasBeenChangedPasswordAfterToken = function (
   tokenTimestamp,
 ) {
