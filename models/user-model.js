@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema({
       message: 'email not valid',
     },
   },
+  role: {
+    type: String,
+    enum: ['user', 'guide', 'lead-guide', 'admin'],
+    default: 'user',
+  },
   photo: { type: String },
   password: {
     type: String,
@@ -75,11 +80,13 @@ userSchema.methods.comparePasswords = async function (
 userSchema.methods.hasBeenChangedPasswordAfterToken = function (
   tokenTimestamp,
 ) {
+  if (!this.passwordChangedAt) return false;
+
   const changingTimestamp = parseInt(
     this.passwordChangedAt.getTime() / 1000,
     DECIMAL_RADIX,
   );
-  return this.passwordChangedAt && changingTimestamp > tokenTimestamp;
+  return changingTimestamp > tokenTimestamp;
 };
 
 const User = mongoose.model('User', userSchema);

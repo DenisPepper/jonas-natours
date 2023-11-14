@@ -1,7 +1,6 @@
 // get all tours
 GET http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNiNzkzMWQyMmM4M2JlOGNhM2Y2ZCIsImlhdCI6MTY5OTk4NTMwMCwiZXhwIjoxNzA3NzYxMzAwfQ.X56_vJYTtaf45RUCNOoewa93xtcz7QPS73dMua7bCNY
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTY5OTk5MTQxNywiZXhwIjoxNzA3NzY3NDE3fQ.5h-pFlVgO1qamUoUT-OuK5MSzVv26ZqTq2YZJB8PJ7k
 ###
 
 // create a new user
@@ -12,7 +11,8 @@ content-type: application/json
   "name": "Denis Pepper",
   "email": "denis_pepper@vk.com",
   "password": "pass123456",
-  "passwordConfirm": "pass123456"
+  "passwordConfirm": "pass123456",
+  "role": "admin"
 }
 ###
 
@@ -80,7 +80,8 @@ content-type: application/json
 ###
 
 // delete tour by id
-DELETE http://127.0.0.1:3000/api/v1/tours/6543b9441e8f5b0734ae63bd HTTP/1.1
+DELETE http://127.0.0.1:3000/api/v1/tours/65443e0c9dedb74dfccdf2c1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTY5OTk5MTQxNywiZXhwIjoxNzA3NzY3NDE3fQ.5h-pFlVgO1qamUoUT-OuK5MSzVv26ZqTq2YZJB8PJ7k
 ###
 
 // create a new tour
@@ -102,5 +103,5 @@ content-type: application/json
 ###
 
 // get tour by id
-GET http://127.0.0.1:3000/api/v1/tours/51515151654a00d3fa63bf46ac976f7d HTTP/1.1
+GET http://127.0.0.1:3000/api/v1/tours/65443e0c9dedb74dfccdf2c1 HTTP/1.1
 ###

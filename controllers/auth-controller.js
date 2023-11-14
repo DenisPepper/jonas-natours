@@ -21,9 +21,7 @@ exports.signup = handleAsync(async (req, res, next) => {
     status: 'success',
     token: signToken(user._id),
     data: {
-      name: user.name,
-      email: user.email,
-      id: user._id,
+      user,
     },
   });
 });
@@ -84,3 +82,17 @@ exports.protect = handleAsync(async (req, res, next) => {
 
   next();
 });
+
+exports.allowTo =
+  (...roles) =>
+  (req, res, next) => {
+    if (!roles.includes(req.user.role))
+      return next(
+        new AppError(
+          'Your role does not allow you to perform this action',
+          403,
+        ),
+      );
+
+    next();
+  };
