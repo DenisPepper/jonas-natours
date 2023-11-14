@@ -78,5 +78,8 @@ exports.protect = handleAsync(async (req, res, next) => {
       new AppError('Your token is not valid! You must authorize', 401),
     );
 
+  // добавит пользователя в объект запроса для повторного переиспользования
+  req.user = user;
+
   next();
 });
