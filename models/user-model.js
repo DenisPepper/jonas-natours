@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcript = require('bcryptjs');
 
+const DECIMAL_RADIX = 10;
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -44,6 +46,7 @@ const userSchema = new mongoose.Schema({
       message: 'password not valid',
     },
   },
+  passwordChangedAt: { type: Date, select: false },
 });
 
 userSchema.pre('save', async function (next) {
@@ -56,12 +59,25 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+//сработает после выборки
 //определит для модели пользователя метод для проверки введенного пароля
-userSchema.methods.checkPassword = async function (
+userSchema.methods.comparePasswords = async function (
   incomingPassword,
   userPassword,
 ) {
   return await bcript.compare(incomingPassword, userPassword);
+};
+
+//сработает после выборки
+//определит для модели пользователя метод для проверки смены пароля
+userSchema.methods.hasBeenChangedPasswordAfterToken = function (
+  tokenTimestamp,
+) {
+  const changingTimestamp = parseInt(
+    this.passwordChangedAt.getTime() / 1000,
+    DECIMAL_RADIX,
+  );
+  return this.passwordChangedAt && changingTimestamp > tokenTimestamp;
 };
 
 const User = mongoose.model('User', userSchema);
