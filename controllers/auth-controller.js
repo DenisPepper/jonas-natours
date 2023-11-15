@@ -1,8 +1,10 @@
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
+const { token } = require('morgan');
 const User = require('../models/user-model');
 const handleAsync = require('../utils/handle-async');
 const AppError = require('../utils/app-error');
+const sendEmail = require('../utils/email');
 
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -55,14 +57,14 @@ exports.login = handleAsync(async (req, res, next) => {
 // TODO: протестировать этот метод на отказ, когда будет реализован роут для смены пароля
 exports.protect = handleAsync(async (req, res, next) => {
   // получаем токен и проверяем его поддлинность
-  let token = '';
+  let tokenJWT = '';
   if (req.headers.authorization?.startsWith('Bearer')) {
-    token = req.headers.authorization.split(' ').pop();
+    tokenJWT = req.headers.authorization.split(' ').pop();
   }
-  if (!token) return next(new AppError('You are not authorized!', 401));
+  if (!tokenJWT) return next(new AppError('You are not authorized!', 401));
 
   const verifiedToken = await promisify(jwt.verify)(
-    token,
+    tokenJWT,
     process.env.JWT_SECRET,
   );
 
@@ -96,3 +98,48 @@ exports.allowTo =
 
     next();
   };
+
+// сброс пароля
+exports.forgotPassword = handleAsync(async (req, res, next) => {
+  // 1 Получаем пользователя по адресу почты
+  const user = await User.findOne({ email: req.body.email }).select([
+    '+passwordResetToken',
+    '+passwordResetExpires',
+  ]);
+  if (!user)
+    return next(new AppError('There is no user with email address!', 404));
+
+  // 2 Создаем токен для сброса пароля и сохраняем токен и дату истечения токена в БД
+  const resetToken = user.createPasswordResetToken();
+  // при сохранении отключим валидацию
+  await user.save({ validateBeforeSave: false });
+
+  // 3 Отправляем сообщение
+  const resetUrl = `${req.protocol}://${req.get(
+    'host',
+  )}/api/v1/users/resetPassword/${resetToken}`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Reset token (valid for 10 min)',
+      message: `Reset link: ${resetUrl}`,
+    });
+    res.status(204).send();
+  } catch (error) {
+    // в случае ошибки при отправке сообщения обнуляем токен и время жизни токена
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(
+      new AppError(
+        'An error occurred while sending the email. Try again later!',
+        500,
+      ),
+    );
+  }
+});
+
+exports.resetPassword = (req, res, next) => {
+  next();
+};

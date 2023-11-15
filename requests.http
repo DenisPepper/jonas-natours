@@ -3,6 +3,15 @@ GET http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTY5OTk5MTQxNywiZXhwIjoxNzA3NzY3NDE3fQ.5h-pFlVgO1qamUoUT-OuK5MSzVv26ZqTq2YZJB8PJ7k
 ###
 
+// запрос - когда забыл пароль
+POST http://127.0.0.1:3000/api/v1/users/forgotPassword HTTP/1.1
+content-type: application/json
+  
+{
+  "email": "pepperden21@gmail.com"
+}
+###
+
 // create a new user
 POST http://127.0.0.1:3000/api/v1/users/signup HTTP/1.1
 content-type: application/json
@@ -19,7 +28,7 @@ content-type: application/json
 // login
 POST http://127.0.0.1:3000/api/v1/users/login HTTP/1.1
 content-type: application/json
- 
+
 {
   "email": "denis_pepper@vk.com",
   "password": "pass123456"
