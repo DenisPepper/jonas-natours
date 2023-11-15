@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const mongoose = require('mongoose');
 const bcript = require('bcryptjs');
 
@@ -52,6 +53,8 @@ const userSchema = new mongoose.Schema({
     },
   },
   passwordChangedAt: { type: Date, select: false },
+  passwordResetToken: { type: String, select: false },
+  passwordResetExpires: { type: Date, select: false },
 });
 
 userSchema.pre('save', async function (next) {
@@ -87,6 +90,19 @@ userSchema.methods.hasBeenChangedPasswordAfterToken = function (
     DECIMAL_RADIX,
   );
   return changingTimestamp > tokenTimestamp;
+};
+
+// Создает токен для сброса пароля, который будет отправлен пользователю на почту
+userSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  //10 минут на смену пароля
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+  return resetToken;
 };
 
 const User = mongoose.model('User', userSchema);
