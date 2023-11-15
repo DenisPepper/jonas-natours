@@ -1,6 +1,6 @@
 // get all tours
 GET http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTY5OTk5MTQxNywiZXhwIjoxNzA3NzY3NDE3fQ.5h-pFlVgO1qamUoUT-OuK5MSzVv26ZqTq2YZJB8PJ7k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDA3MzY4MSwiZXhwIjoxNzA3ODQ5NjgxfQ.DpRuNM7c11x55U2FfrEXhmIYij4Ewm0VF-4QpwkDgEA
 ###
 
 // запрос - когда забыл пароль
@@ -9,6 +9,16 @@ content-type: application/json
   
 {
   "email": "pepperden21@gmail.com"
+}
+###
+
+// запрос - обновление пароля
+PATCH  http://127.0.0.1:3000/api/v1/users/resetPassword/421d6851fb2b6a8d9cfa64a882da22aac755ffc623146def2dd5ff2410eb7a3b HTTP/1.1
+content-type: application/json
+  
+{
+  "password": "pass123456",
+  "passwordConfirm": "pass123456"
 }
 ###
 
@@ -30,7 +40,7 @@ POST http://127.0.0.1:3000/api/v1/users/login HTTP/1.1
 content-type: application/json
 
 {
-  "email": "denis_pepper@vk.com",
+  "email": "pepperden21@gmail.com",
   "password": "pass123456"
 }
 ###

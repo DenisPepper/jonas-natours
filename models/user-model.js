@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
     validate: {
       validator: function (value) {
-        // this - только при создании (only on create and save), не работает при обновлении
+        // this - только при создании и сохранении (only on create and save), не работает при обновлении
         return value === this.password;
       },
       message: 'password not valid',
@@ -57,6 +57,9 @@ const userSchema = new mongoose.Schema({
   passwordResetExpires: { type: Date, select: false },
 });
 
+/*
+Методы промежуточного программного обеспечения
+*/
 userSchema.pre('save', async function (next) {
   //если пароль не был изменен, то шифровать не надо
   if (!this.isModified('password')) return next();
@@ -67,6 +70,21 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+userSchema.pre('save', function (next) {
+  // если это новый документ или пароль не был изменен,
+  // то время последнего изменения регистрировать не надо
+  if (this.isNew || !this.isModified('password')) return next();
+
+  // при установке времени изменения вычитаем 1 секунду ,т.к. запись в базу данных может
+  // быть выполненна позже, чем будет создан JWT токен, и тогда
+  // пользователь не пройдет проверку в hasBeenChangedPasswordAfterToken()
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
+/*
+Статические методы для работы с выборкой
+*/
 //сработает после выборки
 //определит для модели пользователя метод для проверки введенного пароля
 userSchema.methods.comparePasswords = async function (

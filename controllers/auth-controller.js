@@ -1,6 +1,6 @@
+const crypto = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
-const { token } = require('morgan');
 const User = require('../models/user-model');
 const handleAsync = require('../utils/handle-async');
 const AppError = require('../utils/app-error');
@@ -23,7 +23,9 @@ exports.signup = handleAsync(async (req, res, next) => {
     status: 'success',
     token: signToken(user._id),
     data: {
-      user,
+      name: user.name,
+      email: user.email,
+      role: user.role,
     },
   });
 });
@@ -49,12 +51,11 @@ exports.login = handleAsync(async (req, res, next) => {
     data: {
       name: user.name,
       email: user.email,
-      id: user._id,
+      role: user.role,
     },
   });
 });
 
-// TODO: протестировать этот метод на отказ, когда будет реализован роут для смены пароля
 exports.protect = handleAsync(async (req, res, next) => {
   // получаем токен и проверяем его поддлинность
   let tokenJWT = '';
@@ -140,6 +141,41 @@ exports.forgotPassword = handleAsync(async (req, res, next) => {
   }
 });
 
-exports.resetPassword = (req, res, next) => {
-  next();
-};
+exports.resetPassword = handleAsync(async (req, res, next) => {
+  // 1 Получаем пользователя по токену из письма
+  const { token: resetToken } = req.params;
+  // шифруем токен (также как и в момент его создания при сбросе в процедуре createPasswordResetToken)
+  // , чтобы найти по зашифрованному токену пользователя
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+  // ищем пользователя по токену и по времени жизни токена, т.к. время жизни токена -  минут
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  }).select([
+    '+passwordResetToken',
+    '+passwordResetExpires',
+    '+passwordChangedAt',
+  ]);
+
+  // 2 Отправляем ошибку или Устанавливаем новый пароль, если пользователь есть и токен не просрочен
+  if (!user)
+    return next(new AppError('Token not valid or token was expire!', 400));
+  // обновляем данные пользователя
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  await user.save();
+
+  // 3 Логиним пользователя и отправляем новый JWT
+  res.status(201).json({
+    status: 'success',
+    token: signToken(user._id),
+    data: {
+      user: { ...user, password: undefined },
+    },
+  });
+});
