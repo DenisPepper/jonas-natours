@@ -29,3 +29,24 @@ exports.getUsersById = (req, res, next) => getStub(req, res);
 exports.updateUser = (req, res, next) => getStub(req, res);
 
 exports.deleteUser = (req, res, next) => getStub(req, res);
+
+exports.updateUserInfo = handleAsync(async (req, res, next) => {
+  const { name, email } = req.body;
+  // req.user - существует в оперативной памяти сервера после авторизации в protect
+  const { _id: id } = req.user;
+
+  // 1 Получаем документ пользователя
+  const user = await User.findByIdAndUpdate(
+    id,
+    { name, email },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: user,
+  });
+});

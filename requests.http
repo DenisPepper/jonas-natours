@@ -3,6 +3,18 @@ GET http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDA3MzY4MSwiZXhwIjoxNzA3ODQ5NjgxfQ.DpRuNM7c11x55U2FfrEXhmIYij4Ewm0VF-4QpwkDgEA
 ###
 
+// update user info (name, email)
+PATCH  http://127.0.0.1:3000/api/v1/users/updateUserInfo HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDEyMzg0MSwiZXhwIjoxNzA3ODk5ODQxfQ.fFPzOCCuwh29qIEfFKISXvZ5ZZScQoL4DuTWQlT1YZw
+content-type: application/json
+ 
+{
+  "name": "Den Pepper",
+  "email": "pepperden21@gmail.com",
+  "role": "fake-role"
+}
+###
+
 // update password
 PATCH  http://127.0.0.1:3000/api/v1/users/updatePassword HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDExNzMwOSwiZXhwIjoxNzA3ODkzMzA5fQ.Az9ecDRRvYAxSFE3sWb8lx8C92m0VfD34OQHZDT-pPU
