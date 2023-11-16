@@ -3,6 +3,18 @@ GET http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDA3MzY4MSwiZXhwIjoxNzA3ODQ5NjgxfQ.DpRuNM7c11x55U2FfrEXhmIYij4Ewm0VF-4QpwkDgEA
 ###
 
+// update password
+PATCH  http://127.0.0.1:3000/api/v1/users/updatePassword HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDExNzMwOSwiZXhwIjoxNzA3ODkzMzA5fQ.Az9ecDRRvYAxSFE3sWb8lx8C92m0VfD34OQHZDT-pPU
+content-type: application/json
+ 
+{
+  "currentPassword": "pass123456",
+  "password": "123456",
+  "passwordConfirm": "123456"
+}
+###
+
 // запрос - когда забыл пароль
 POST http://127.0.0.1:3000/api/v1/users/forgotPassword HTTP/1.1
 content-type: application/json
@@ -12,7 +24,7 @@ content-type: application/json
 }
 ###
 
-// запрос - обновление пароля
+// reset password
 PATCH  http://127.0.0.1:3000/api/v1/users/resetPassword/421d6851fb2b6a8d9cfa64a882da22aac755ffc623146def2dd5ff2410eb7a3b HTTP/1.1
 content-type: application/json
   
@@ -41,7 +53,7 @@ content-type: application/json
 
 {
   "email": "pepperden21@gmail.com",
-  "password": "pass123456"
+  "password": "123456"
 }
 ###
 

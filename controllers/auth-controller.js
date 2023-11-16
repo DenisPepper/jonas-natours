@@ -169,3 +169,24 @@ exports.resetPassword = handleAsync(async (req, res, next) => {
   // 3 Логиним пользователя и отправляем новый JWT
   createSendToken(user, 201, res);
 });
+
+// обновление пароля - вызывается после protect
+exports.updatePassword = handleAsync(async (req, res, next) => {
+  const { currentPassword, password, passwordConfirm } = req.body;
+  // req.user - существует в оперативной памяти сервера после авторизации в protect
+  const { _id: id } = req.user;
+
+  // 1 Получаем документ пользователя
+  const user = await User.findById(id).select('+password');
+
+  // 2 проверка на совпадение введенного пароля и сохраненного
+  if (!(await user.comparePasswords(currentPassword, user.password)))
+    return next(new AppError('You enter invalid password!', 401));
+
+  user.password = password;
+  user.passwordConfirm = passwordConfirm;
+  await user.save();
+
+  // 3 Логиним пользователя и отправляем новый JWT
+  createSendToken(user, 201, res);
+});
