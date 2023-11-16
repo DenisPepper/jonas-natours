@@ -50,3 +50,13 @@ exports.updateUserInfo = handleAsync(async (req, res, next) => {
     data: user,
   });
 });
+
+exports.deleteMyUser = handleAsync(async (req, res, next) => {
+  // req.user - существует в оперативной памяти сервера после авторизации в protect
+  const { _id: id } = req.user;
+
+  // 1 Получаем документ пользователя
+  const user = await User.findByIdAndUpdate(id, { isActive: false });
+
+  res.status(204).send();
+});

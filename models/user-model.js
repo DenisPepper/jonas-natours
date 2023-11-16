@@ -55,6 +55,7 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: { type: Date, select: false },
   passwordResetToken: { type: String, select: false },
   passwordResetExpires: { type: Date, select: false },
+  isActive: { type: Boolean, default: true, select: false },
 });
 
 /*
@@ -79,6 +80,22 @@ userSchema.pre('save', function (next) {
   // быть выполненна позже, чем будет создан JWT токен, и тогда
   // пользователь не пройдет проверку в hasBeenChangedPasswordAfterToken()
   this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
+// исклечение из выборки неактивных пользователей
+userSchema.pre(/^find/, function (next) {
+  // $ne: false - потому что могут быть undefined
+  this.find({ isActive: { $ne: false } });
+  next();
+});
+
+//AGGREGATION MIDDLEWARE
+// исклечение из выборки неактивных пользователей
+userSchema.pre('aggregate', function (next) {
+  // this - это агрегация
+  // $ne: false - потому что могут быть undefined
+  this.pipeline().unshift({ $match: { isActive: { $ne: false } } });
   next();
 });
 
