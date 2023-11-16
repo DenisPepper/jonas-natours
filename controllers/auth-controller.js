@@ -19,6 +19,7 @@ const createSendToken = (user, statusCode, res) => {
 
   const cookieOptions = {
     expires: new Date(Date.now() + expirationDate),
+    //будет доступно только при http взаимодействии
     httpOnly: true,
   };
 
