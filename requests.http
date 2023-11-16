@@ -56,13 +56,13 @@ content-type: application/json
 // create a new user
 POST http://127.0.0.1:3000/api/v1/users/signup HTTP/1.1
 content-type: application/json
-
+ 
 {
-  "name": "Denis Pepper",
+  "name": "Denis st Pepper",
   "email": "denis_pepper@vk.com",
   "password": "pass123456",
   "passwordConfirm": "pass123456",
-  "role": "admin"
+  "role": "guide"
 }
 ###
 
@@ -71,8 +71,8 @@ POST http://127.0.0.1:3000/api/v1/users/login HTTP/1.1
 content-type: application/json
 
 {
-  "email": "pepperden21@gmail.com",
-  "password": "123456"
+  "email": "denis_pepper@vk.com",
+  "password": "pass123456"
 }
 ###
 
