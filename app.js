@@ -1,4 +1,5 @@
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
 const AppError = require('./utils/app-error');
 const globalErrorHandler = require('./controllers/error-controller');
@@ -15,7 +16,7 @@ const routes = {
 
 const app = express();
 
-// --------1 middleware -------------------
+// --------1 global middlewares -------------------
 
 //обрабатывает body в запросе, предоставляя body в формате json
 app.use(express.json());
@@ -28,6 +29,14 @@ if (process.env.NODE_ENV === 'development') {
   // выводит в консоль инфо о запросах/ответах
   app.use(morgan('dev'));
 }
+
+// разрешает 100 запросов за 1 час с одного ip-адреса
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Превышено количество запросов для IP-адреса',
+});
+app.use('/api', limiter);
 
 // мидлвара, которая добавляет время запроса
 app.use((req, res, next) => {
