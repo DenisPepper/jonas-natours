@@ -9,13 +9,13 @@ const AppError = require('./utils/app-error');
 const globalErrorHandler = require('./controllers/error-controller');
 const tourRouter = require('./routes/tour-routes');
 const userRouter = require('./routes/user-routes');
+const reviewRouter = require('./routes/review-router');
 
 const routes = {
   home: '/',
   users: '/api/v1/users',
-  //user: '/api/v1/users/:id',
   tours: '/api/v1/tours',
-  //tour: '/api/v1/tours/:id/:type?', //:type? - необязательный параметр
+  reviews: '/api/v1/review',
 };
 
 const app = express();
@@ -78,6 +78,7 @@ app.use((req, res, next) => {
 // это middleware будет использовано только для указанного маршрута
 app.use(routes.users, userRouter);
 app.use(routes.tours, tourRouter);
+app.use(routes.reviews, reviewRouter);
 
 //Обработка ошибок, связаных с вводом недействительных url-адресов
 // сработает для всех методов
