@@ -3,6 +3,7 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const hpp = require('hpp');
 const morgan = require('morgan');
 const AppError = require('./utils/app-error');
 const globalErrorHandler = require('./controllers/error-controller');
@@ -35,6 +36,21 @@ app.use(mongoSanitize());
 
 // очистка входных данных от XSS
 app.use(xss());
+
+// очистка строки с параметрами запроса от дублирований, повторений и т.п.
+// в белый список можно передавать имена параметров в качестве исключений
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsAverage',
+      'ratingsQuantity',
+      'maxGroupSize',
+      'difficulty',
+      'price',
+    ],
+  }),
+);
 
 // Обрабатывает статические файлы в указанной папке
 // http://127.0.0.1:3000/overview.html - откроет в браузере указанный ресурс из папки public
