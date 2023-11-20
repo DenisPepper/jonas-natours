@@ -130,6 +130,15 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
+// просит монго наполнить данные о гидах при любых запросах
+tourSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -role',
+  });
+  next();
+});
+
 //AGGREGATION MIDDLEWARE
 tourSchema.pre('aggregate', function (next) {
   // this - это агрегация
