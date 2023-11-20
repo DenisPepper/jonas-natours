@@ -78,8 +78,8 @@ POST http://127.0.0.1:3000/api/v1/users/login HTTP/1.1
 content-type: application/json
 
 {
-  "email": "pepperden21@gmail.com",
-  "password": "123456"
+  "email": "denis_pepper@vk.com",
+  "password": "pass123456"
 }
 ###
 
@@ -169,3 +169,19 @@ content-type: application/json
 GET http://127.0.0.1:3000/api/v1/tours/655b2fe37ef9194aa0d9e25d HTTP/1.1
 ###
  
+ // create review
+POST http://127.0.0.1:3000/api/v1/reviews/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTVmMGZjZDE0ZWEwMTQ1OGY2YzhmNyIsImlhdCI6MTcwMDQ4MTQ3OCwiZXhwIjoxNzAxMzQ1NDc4fQ.ni0pEiHNaLS6Yf7DGh-gwFvHNzf1YOj2-mnFEdnQ85Q
+content-type: application/json
+
+{
+  "tour": "5c88fa8cf4afda39709c295a",
+  "user": "6555f0fcd14ea01458f6c8f7",
+  "review": "Мне не понравилось, плохо кормили...",
+  "rating": 3
+}
+###
+
+// get tour by id
+GET http://127.0.0.1:3000/api/v1/reviews HTTP/1.1
+###

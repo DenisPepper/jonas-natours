@@ -6,7 +6,11 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(authController.protect, reviewController.getReviews)
-  .post(authController.protect, reviewController.createReview);
+  .get(reviewController.getReviews)
+  .post(
+    authController.protect,
+    authController.allowTo('user'),
+    reviewController.createReview,
+  );
 
 module.exports = router;

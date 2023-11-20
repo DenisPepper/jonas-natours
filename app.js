@@ -15,7 +15,7 @@ const routes = {
   home: '/',
   users: '/api/v1/users',
   tours: '/api/v1/tours',
-  reviews: '/api/v1/review',
+  reviews: '/api/v1/reviews',
 };
 
 const app = express();
