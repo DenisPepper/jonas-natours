@@ -89,6 +89,14 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 }); //виртуальное поле, которого не будет в БД, но будет в результате запроса
 
+// виртуальное заполнение отзывов
+// поскольку отзывы не хранятся в туре, для отзывов делаем виртуальное заполнение
+tourSchema.virtual('reviews', {
+  ref: 'Review', // имя модели для связывания
+  foreignField: 'tour', // имя поля для связывания в модели Review
+  localField: '_id', // имя поля для связывания в текущей модели - Tour
+});
+
 // SAVE NEW DOC MIDDLEWARE
 /* // подписка на событие перед save() и create()
 tourSchema.pre('save', function (next) {
