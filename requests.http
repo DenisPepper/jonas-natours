@@ -10,11 +10,6 @@ content-type: application/json
 }
 ###
 
-// get all tours
-GET http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDA3MzY4MSwiZXhwIjoxNzA3ODQ5NjgxfQ.DpRuNM7c11x55U2FfrEXhmIYij4Ewm0VF-4QpwkDgEA
-###
-
 // отключит пользователя
 DELETE  http://127.0.0.1:3000/api/v1/users/deleteUser HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDEyNTU5OSwiZXhwIjoxNzA3OTAxNTk5fQ.Ymo_1WXPVwvyxjj5NxpLBZA61eOFiboSELiDp4bBGcU
@@ -83,8 +78,8 @@ POST http://127.0.0.1:3000/api/v1/users/login HTTP/1.1
 content-type: application/json
 
 {
-  "email": "denis_pepper@vk.com",
-  "password": "pass123456"
+  "email": "pepperden21@gmail.com",
+  "password": "123456"
 }
 ###
 
@@ -141,9 +136,14 @@ content-type: application/json
 }
 ###
 
-// delete tour by id
-DELETE http://127.0.0.1:3000/api/v1/tours/65443e0c9dedb74dfccdf2c1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTY5OTk5MTQxNywiZXhwIjoxNzA3NzY3NDE3fQ.5h-pFlVgO1qamUoUT-OuK5MSzVv26ZqTq2YZJB8PJ7k
+// delete tour by id 
+DELETE http://127.0.0.1:3000/api/v1/tours/655b2f457ef9194aa0d9e257 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDQ3MzU5NywiZXhwIjoxNzAxMzM3NTk3fQ.PjTZZUoOY_jsNH6SHqNCqHrFKZJiprUkYndRqjMsCHs
+###
+
+// get all tours
+GET http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDQ3MzU5NywiZXhwIjoxNzAxMzM3NTk3fQ.PjTZZUoOY_jsNH6SHqNCqHrFKZJiprUkYndRqjMsCHs
 ###
 
 // create a new tour
@@ -159,7 +159,7 @@ content-type: application/json
   "summary": "Test",
   "description": "Test.",
   "imageCover": "tour-2-cover.jpg",
-  "isSecret": true,
+  "isSecret": false,
   "ratingsAverage":5,
   "guides": ["6555f0fcd14ea01458f6c8f7", "6553cf7828f02a3048e6b0ca"]
 }

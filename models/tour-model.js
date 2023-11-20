@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const User = require('./user-model');
+//const User = require('./user-model');
 //const slugify = require('slugify');
 
 const tourSchema = new mongoose.Schema(
@@ -79,7 +79,7 @@ const tourSchema = new mongoose.Schema(
         day: Number,
       },
     ],
-    guides: Array,
+    guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   },
   { toJSON: { virtuals: true } },
   { toObject: { virtuals: true } },
@@ -101,14 +101,16 @@ tourSchema.pre('save', function (next) {
 tourSchema.pre('save', function (doc, next) {
   this.slug = slugify(this.name, { lower: true });
   next();
-}); */
+}); 
 
+// метод встраивает пользователей в документ тура
 tourSchema.pre('save', async function (next) {
   // this - это документ, который сохраняется или создается
   const guidesPromises = this.guides.map(async (id) => await User.findById(id));
   this.guides = await Promise.all(guidesPromises);
   next();
 });
+*/
 
 // QUERY MIDDLEWARE
 /* eslint-disable prefer-arrow-callback */
