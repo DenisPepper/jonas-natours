@@ -1,6 +1,8 @@
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
 const morgan = require('morgan');
 const AppError = require('./utils/app-error');
 const globalErrorHandler = require('./controllers/error-controller');
@@ -27,6 +29,12 @@ app.use(helmet());
 //обрабатывает body в запросе, считывает даные из тела запроса в req.body
 // установит размер данных в body не более 10 кб
 app.use(express.json({ limit: '10kb' }));
+
+// очистка входных данных от noSQL инъекций
+app.use(mongoSanitize());
+
+// очистка входных данных от XSS
+app.use(xss());
 
 // Обрабатывает статические файлы в указанной папке
 // http://127.0.0.1:3000/overview.html - откроет в браузере указанный ресурс из папки public
