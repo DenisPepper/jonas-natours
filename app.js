@@ -1,5 +1,6 @@
 const express = require('express');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const morgan = require('morgan');
 const AppError = require('./utils/app-error');
 const globalErrorHandler = require('./controllers/error-controller');
@@ -18,8 +19,14 @@ const app = express();
 
 // --------1 global middlewares -------------------
 
-//обрабатывает body в запросе, предоставляя body в формате json
-app.use(express.json());
+// установит заголовки, обеспечивающие безопасность
+// некоторые включены по умолчанию, некоторые надо включать опционально
+// https://github.com/helmetjs/helmet
+app.use(helmet());
+
+//обрабатывает body в запросе, считывает даные из тела запроса в req.body
+// установит размер данных в body не более 10 кб
+app.use(express.json({ limit: '10kb' }));
 
 // Обрабатывает статические файлы в указанной папке
 // http://127.0.0.1:3000/overview.html - откроет в браузере указанный ресурс из папки public
