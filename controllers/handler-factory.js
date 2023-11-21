@@ -1,3 +1,4 @@
+const APIFeatures = require('../utils/api-features');
 const AppError = require('../utils/app-error');
 const handleAsync = require('../utils/handle-async');
 
@@ -27,6 +28,23 @@ exports.getOneById = (model, populateOptions) =>
     res.status(200).json({
       status: 'success',
       data: doc,
+    });
+  });
+
+exports.getAll = (model) =>
+  handleAsync(async (req, res, next) => {
+    const features = new APIFeatures(model.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+
+    const data = await features.query;
+
+    res.status(200).json({
+      status: 'success',
+      results: data.length,
+      data,
     });
   });
 

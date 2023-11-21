@@ -11,22 +11,7 @@ exports.aliasTopTours = (req, res, next) => {
   next();
 };
 
-exports.getTours = handleAsync(async (req, res, next) => {
-  const features = new APIFeatures(Tour.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-
-  const toursList = await features.query;
-  res.status(200).json({
-    status: 'success',
-    results: toursList.length,
-    data: {
-      tours: toursList,
-    },
-  });
-});
+exports.getTours = factory.getAll(Tour);
 
 exports.getTourById = factory.getOneById(Tour, { path: 'reviews' });
 
