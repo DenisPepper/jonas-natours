@@ -13,6 +13,7 @@ router
   .post(
     authController.protect,
     authController.allowTo('user'),
+    reviewController.checkRequestBody,
     reviewController.createReview,
   );
 
@@ -21,7 +22,7 @@ router
   .patch(
     authController.protect,
     authController.allowTo('admin', 'user'),
-    reviewController.deleteReview,
+    reviewController.updateReview,
   )
   .delete(
     authController.protect,

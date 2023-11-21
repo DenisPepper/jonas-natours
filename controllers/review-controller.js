@@ -3,6 +3,14 @@ const APIFeatures = require('../utils/api-features');
 const handleAsync = require('../utils/handle-async');
 const factory = require('./handler-factory');
 
+exports.checkRequestBody = (req, res, next) => {
+  // если браузер указал роут вручную,
+  // нужно установить тур из строки запроса, а юзера - из мидлвары авторизации
+  req.body.tour = req.body.tour ?? req.params.tourID;
+  req.body.user = req.body.user ?? req.user.id;
+  next();
+};
+
 exports.getReviews = handleAsync(async (req, res, next) => {
   const tour = req.params.tourID ? { tour: req.params.tourID } : {};
 
@@ -22,21 +30,8 @@ exports.getReviews = handleAsync(async (req, res, next) => {
   });
 });
 
-exports.createReview = handleAsync(async (req, res, next) => {
-  // если браузер указал роут вручную,
-  // нужно установить тур из строки запроса, а юзера - из мидлвары авторизации
-  req.body.tour = req.body.tour ?? req.params.tourID;
-  req.body.user = req.body.user ?? req.user.id;
-
-  const review = await Review.create(req.body);
-  res.status(201).json({
-    status: 'success',
-    data: {
-      review,
-    },
-  });
-});
+exports.createReview = factory.createOne(Review);
 
 exports.deleteReview = factory.deleteOneById(Review);
 
-exports.deleteReview = factory.updateOneById(Review);
+exports.updateReview = factory.updateOneById(Review);

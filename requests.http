@@ -188,8 +188,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTVmMGZjZ
 content-type: application/json
 
 {
-  "review": "Так себе, никому не порекомендовал бы 🐸🐸🐸",
-  "rating": 3
+  "review": "Нормальный тур, всем рекомендую!!!😊",
+  "rating": 4
 }
 ###
 
