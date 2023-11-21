@@ -21,6 +21,7 @@ const reviewSchema = new mongoose.Schema(
       type: Number,
       max: [5, 'Tour rating must be <= 5'],
       min: [1, 'Tour rating must be >= 1'],
+      required: [true, 'Review can`t be without rating!'],
     },
     createdAt: { type: Date, default: Date.now() },
   },

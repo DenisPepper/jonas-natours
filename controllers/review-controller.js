@@ -21,6 +21,11 @@ exports.getReviews = handleAsync(async (req, res, next) => {
 });
 
 exports.createReview = handleAsync(async (req, res, next) => {
+  // если браузер указал роут вручную,
+  // нужно установить тур из строки запроса, а юзера - из мидлвары авторизации
+  req.body.tour = req.body.tour ?? req.params.tourID;
+  req.body.user = req.body.user ?? req.user.id;
+
   const review = await Review.create(req.body);
   res.status(201).json({
     status: 'success',
