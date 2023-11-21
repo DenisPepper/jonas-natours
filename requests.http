@@ -101,6 +101,10 @@ content-type: application/json
 GET http://127.0.0.1:3000/api/v1/users/ HTTP/1.1
 ###
 
+// get user by ID 
+GET http://127.0.0.1:3000/api/v1/users/6553cf7828f02a3048e6b0ca HTTP/1.1
+###
+
 // get tour s monthly plan
 GET http://127.0.0.1:3000/api/v1/tours/monthly-plan/2022 HTTP/1.1
 ###

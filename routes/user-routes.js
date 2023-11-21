@@ -28,9 +28,10 @@ router
   .route('/')
   .get(userController.getAllUsers)
   .post(userController.createUser);
+
 router
   .route('/:id')
-  .get(userController.getUsersById)
+  .get(userController.getUserById)
   .patch(
     authController.protect,
     authController.allowTo('admin'),
