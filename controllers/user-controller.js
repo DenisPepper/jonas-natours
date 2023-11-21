@@ -1,6 +1,7 @@
 const User = require('../models/user-model');
 const APIFeatures = require('../utils/api-features');
 const handleAsync = require('../utils/handle-async');
+const factory = require('./handler-factory');
 
 const getStub = handleAsync(async (req, res, next) => {
   const features = new APIFeatures(User.find(), req.query)
@@ -28,7 +29,7 @@ exports.getUsersById = (req, res, next) => getStub(req, res);
 
 exports.updateUser = (req, res, next) => getStub(req, res);
 
-exports.deleteUser = (req, res, next) => getStub(req, res);
+exports.deleteUser = factory.deleteOneById(User);
 
 exports.updateUserInfo = handleAsync(async (req, res, next) => {
   const { name, email } = req.body;

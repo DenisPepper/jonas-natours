@@ -13,8 +13,11 @@ content-type: application/json
 // отключит пользователя
 DELETE  http://127.0.0.1:3000/api/v1/users/deleteUser HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDEyNTU5OSwiZXhwIjoxNzA3OTAxNTk5fQ.Ymo_1WXPVwvyxjj5NxpLBZA61eOFiboSELiDp4bBGcU
-content-type: application/json
+###
 
+// удалит пользователя под админом
+DELETE  http://127.0.0.1:3000/api/v1/users/655c69f9cb8f5316e8a106fd HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDQ3MzU5NywiZXhwIjoxNzAxMzM3NTk3fQ.PjTZZUoOY_jsNH6SHqNCqHrFKZJiprUkYndRqjMsCHs
 ###
 
 // update user info (name, email)
@@ -65,11 +68,11 @@ POST http://127.0.0.1:3000/api/v1/users/signup HTTP/1.1
 content-type: application/json
  
 {
-  "name": "Denis st Pepper",
-  "email": "denis_pepper@vk.com",
+  "name": "Test temporary user",
+  "email": "asdfqwer@vk.com",
   "password": "pass123456",
   "passwordConfirm": "pass123456",
-  "role": "guide"
+  "role": "user"
 }
 ###
 
