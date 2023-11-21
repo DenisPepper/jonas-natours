@@ -55,7 +55,7 @@ exports.createTour = handleAsync(async (req, res, next) => {
   });
 });
 
-exports.updateTour = factory.udateOneById(Tour);
+exports.updateTour = factory.updateOneById(Tour);
 
 exports.deleteTour = factory.deleteOneById(Tour);
 

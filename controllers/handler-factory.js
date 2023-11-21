@@ -14,7 +14,7 @@ exports.deleteOneById = (model) =>
     res.status(204).send();
   });
 
-exports.udateOneById = (model) =>
+exports.updateOneById = (model) =>
   handleAsync(async (req, res, next) => {
     const { id } = req.params;
 
