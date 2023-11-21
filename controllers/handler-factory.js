@@ -10,6 +10,26 @@ exports.createOne = (model) =>
     });
   });
 
+exports.getOneById = (model, populateOptions) =>
+  handleAsync(async (req, res, next) => {
+    const { id } = req.params;
+
+    let query = model.findById(id);
+    if (populateOptions) query = query.populate(populateOptions);
+
+    const doc = await query;
+
+    if (!doc) {
+      next(new AppError(`document with {_id : ${id}} - not found`, 404));
+      return;
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: doc,
+    });
+  });
+
 exports.deleteOneById = (model) =>
   handleAsync(async (req, res, next) => {
     const { id } = req.params;
