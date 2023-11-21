@@ -55,26 +55,7 @@ exports.createTour = handleAsync(async (req, res, next) => {
   });
 });
 
-exports.updateTour = handleAsync(async (req, res, next) => {
-  const { id } = req.params;
-  // new: true - вернет обновленный документ, а не оригинал
-  const tour = await Tour.findByIdAndUpdate(id, req.body, {
-    new: true,
-    runValidators: true, // включет валидацию при обновлении документа
-  });
-
-  if (!tour) {
-    next(new AppError(`tour with id{${id}} - not found`, 404));
-    return;
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour,
-    },
-  });
-});
+exports.updateTour = factory.udateOneById(Tour);
 
 exports.deleteTour = factory.deleteOneById(Tour);
 

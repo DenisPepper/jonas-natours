@@ -131,11 +131,11 @@ GET http://127.0.0.1:3000/api/v1/tours/?duration[gte]=5&sort=-duration HTTP/1.1
 ###
 
 // patch tour by id
-PATCH  http://127.0.0.1:3000/api/v1/tours/6543739ec9eeab4bdc73c81e HTTP/1.1
+PATCH  http://127.0.0.1:3000/api/v1/tours/655b2fe37ef9194aa0d9e25d HTTP/1.1
 content-type: application/json
 
 {
-    "price": 550
+    "name": "MY VERY BEST TEST TOUR"
 }
 ###
 
