@@ -137,7 +137,7 @@ content-type: application/json
 ###
 
 // delete tour by id 
-DELETE http://127.0.0.1:3000/api/v1/tours/655b2f457ef9194aa0d9e257 HTTP/1.1
+DELETE http://127.0.0.1:3000/api/v1/tours/5c88fa8cf4afda39709c2951 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDQ3MzU5NywiZXhwIjoxNzAxMzM3NTk3fQ.PjTZZUoOY_jsNH6SHqNCqHrFKZJiprUkYndRqjMsCHs
 ###
 
@@ -166,7 +166,7 @@ content-type: application/json
 ###
 
 // get tour by id
-GET http://127.0.0.1:3000/api/v1/tours/655b2fe37ef9194aa0d9e25d HTTP/1.1
+GET http://127.0.0.1:3000/api/v1/tours/5c88fa8cf4afda39709c2951 HTTP/1.1
 ###
  
  // create review  
