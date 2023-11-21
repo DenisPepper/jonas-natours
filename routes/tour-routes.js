@@ -1,7 +1,7 @@
 const express = require('express');
 const tourController = require('../controllers/tour-controller');
 const authController = require('../controllers/auth-controller');
-const reviewController = require('../controllers/review-controller');
+const reviewRouter = require('./review-router');
 
 const router = express.Router();
 
@@ -31,12 +31,7 @@ router
     tourController.deleteTour,
   );
 
-router
-  .route('/:tourID/reviews')
-  .post(
-    authController.protect,
-    authController.allowTo('user'),
-    reviewController.createReview,
-  );
+// перенаправит   /:tourID/reviews    на    /    reviewRouter-а
+router.use('/:tourID/reviews', reviewRouter);
 
 module.exports = router;
