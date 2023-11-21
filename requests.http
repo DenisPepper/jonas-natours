@@ -59,7 +59,8 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDQ3MzU5NywiZXhwIjoxNzAxMzM3NTk3fQ.PjTZZUoOY_jsNH6SHqNCqHrFKZJiprUkYndRqjMsCHs
 
 {
-    "name": "Денис из Нижнего Новгорода"
+    "password": "51sdc5d1c5d1c5d15cd5c15c",
+    "name": "Денис"
 }
 ###
 

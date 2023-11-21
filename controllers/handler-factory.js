@@ -17,7 +17,9 @@ exports.deleteOneById = (model) =>
 exports.updateOneById = (model) =>
   handleAsync(async (req, res, next) => {
     const { id } = req.params;
-
+    // удалим поле пароля , т.к. этот метод не должен обновлять никакие пароли
+    if (req.body.password) delete req.body.password;
+    console.log(req.body);
     const doc = await model.findByIdAndUpdate(id, req.body, {
       new: true, // new: true - вернет обновленный документ, а не оригинал
       runValidators: true, // включет валидацию при обновлении документа
