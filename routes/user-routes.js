@@ -24,10 +24,7 @@ router.delete(
   authController.protect,
   userController.deleteMyUser,
 );
-router
-  .route('/')
-  .get(userController.getAllUsers)
-  .post(userController.createUser);
+router.route('/').get(userController.getAllUsers);
 
 router
   .route('/:id')
