@@ -1,7 +1,5 @@
 const Tour = require('../models/tour-model');
-const APIFeatures = require('../utils/api-features');
 const handleAsync = require('../utils/handle-async');
-const AppError = require('../utils/app-error');
 const factory = require('./handler-factory');
 
 exports.aliasTopTours = (req, res, next) => {
