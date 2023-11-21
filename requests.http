@@ -53,6 +53,16 @@ content-type: application/json
 }
 ###
 
+// обновит данные пользователя под админом
+PATCH  http://127.0.0.1:3000/api/v1/users/6555f0fcd14ea01458f6c8f7 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDQ3MzU5NywiZXhwIjoxNzAxMzM3NTk3fQ.PjTZZUoOY_jsNH6SHqNCqHrFKZJiprUkYndRqjMsCHs
+
+{
+    "name": "Денис из Нижнего Новгорода"
+}
+###
+
 // reset password
 PATCH  http://127.0.0.1:3000/api/v1/users/resetPassword/421d6851fb2b6a8d9cfa64a882da22aac755ffc623146def2dd5ff2410eb7a3b HTTP/1.1
 content-type: application/json

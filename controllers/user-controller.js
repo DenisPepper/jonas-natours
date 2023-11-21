@@ -27,7 +27,7 @@ exports.createUser = (req, res, next) => getStub(req, res);
 
 exports.getUsersById = (req, res, next) => getStub(req, res);
 
-exports.updateUser = (req, res, next) => getStub(req, res);
+exports.updateUser = factory.updateOneById(User);
 
 exports.deleteUser = factory.deleteOneById(User);
 
