@@ -19,6 +19,7 @@ router
 
 router
   .route('/:id')
+  .get(reviewController.getReviewById)
   .patch(
     authController.protect,
     authController.allowTo('admin', 'user'),

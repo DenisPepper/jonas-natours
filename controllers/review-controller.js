@@ -30,6 +30,8 @@ exports.getReviews = handleAsync(async (req, res, next) => {
   });
 });
 
+exports.getReviewById = factory.getOneById(Review);
+
 exports.createReview = factory.createOne(Review);
 
 exports.deleteReview = factory.deleteOneById(Review);
