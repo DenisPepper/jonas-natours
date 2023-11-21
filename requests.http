@@ -187,3 +187,8 @@ GET http://127.0.0.1:3000/api/v1/reviews HTTP/1.1
 // get nested reviews
 GET http://127.0.0.1:3000/api/v1/tours/655b2fe37ef9194aa0d9e25d/reviews HTTP/1.1
 ### 
+
+// delete review by ID
+DELETE http://127.0.0.1:3000/api/v1/reviews/655c4e70667c1a570c528496 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDQ3MzU5NywiZXhwIjoxNzAxMzM3NTk3fQ.PjTZZUoOY_jsNH6SHqNCqHrFKZJiprUkYndRqjMsCHs
+### 

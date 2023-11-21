@@ -1,7 +1,7 @@
 const Review = require('../models/review-model');
 const APIFeatures = require('../utils/api-features');
 const handleAsync = require('../utils/handle-async');
-const AppError = require('../utils/app-error');
+const factory = require('./handler-factory');
 
 exports.getReviews = handleAsync(async (req, res, next) => {
   const tour = req.params.tourID ? { tour: req.params.tourID } : {};
@@ -36,3 +36,5 @@ exports.createReview = handleAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.deleteReview = factory.deleteOneById(Review);
