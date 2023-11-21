@@ -165,7 +165,7 @@ POST http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
 content-type: application/json
  
 {
-  "name": "new best test tour",
+  "name": "TEST TEST TEST ☝️☝️☝️☝️☝️☝️☝️☝️",
   "duration": 7,
   "maxGroupSize": 15,
   "difficulty": "medium",
@@ -174,8 +174,7 @@ content-type: application/json
   "description": "Test.",
   "imageCover": "tour-2-cover.jpg",
   "isSecret": false,
-  "ratingsAverage":5,
-  "guides": ["6555f0fcd14ea01458f6c8f7", "6553cf7828f02a3048e6b0ca"]
+  "ratingsAverage":5
 }
 ###
 

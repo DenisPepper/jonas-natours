@@ -45,15 +45,7 @@ exports.getTourById = handleAsync(async (req, res, next) => {
   });
 });
 
-exports.createTour = handleAsync(async (req, res, next) => {
-  const tour = await Tour.create(req.body);
-  res.status(201).json({
-    status: 'success',
-    data: {
-      tour,
-    },
-  });
-});
+exports.createTour = factory.createOne(Tour);
 
 exports.updateTour = factory.updateOneById(Tour);
 
