@@ -4,7 +4,9 @@ const handleAsync = require('../utils/handle-async');
 const AppError = require('../utils/app-error');
 
 exports.getReviews = handleAsync(async (req, res, next) => {
-  const features = new APIFeatures(Review.find(), req.query)
+  const tour = req.params.tourID ? { tour: req.params.tourID } : {};
+
+  const features = new APIFeatures(Review.find(tour), req.query)
     .filter()
     .sort()
     .limitFields()

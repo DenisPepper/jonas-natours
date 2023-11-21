@@ -175,11 +175,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTVmMGZjZ
 content-type: application/json
 
 {
-  "review": "Впринципе, нормальный тур 🖖",
-  "rating": 4
+  "review": "Так себе, никому не порекомендовал бы 🐸🐸🐸",
+  "rating": 3
 }
 ###
 
 // get reviews
 GET http://127.0.0.1:3000/api/v1/reviews HTTP/1.1
+### 
+
+// get nested reviews
+GET http://127.0.0.1:3000/api/v1/tours/655b2fe37ef9194aa0d9e25d/reviews HTTP/1.1
 ### 
