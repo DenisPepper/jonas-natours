@@ -105,6 +105,12 @@ GET http://127.0.0.1:3000/api/v1/users/ HTTP/1.1
 GET http://127.0.0.1:3000/api/v1/users/6553cf7828f02a3048e6b0ca HTTP/1.1
 ###
 
+// get my user 
+GET http://127.0.0.1:3000/api/v1/users/my-user HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDQ3MzU5NywiZXhwIjoxNzAxMzM3NTk3fQ.PjTZZUoOY_jsNH6SHqNCqHrFKZJiprUkYndRqjMsCHs
+###
+
+
 // get tour s monthly plan
 GET http://127.0.0.1:3000/api/v1/tours/monthly-plan/2022 HTTP/1.1
 ###

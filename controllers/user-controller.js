@@ -40,3 +40,10 @@ exports.deleteMyUser = handleAsync(async (req, res, next) => {
 
   res.status(204).send();
 });
+
+exports.setAuthId = (req, res, next) => {
+  // установит в параметры запросы id из токена
+  // который определяется в процедуре authController.protect
+  req.params.id = req.user.id;
+  next();
+};
