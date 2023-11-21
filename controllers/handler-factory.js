@@ -33,7 +33,11 @@ exports.getOneById = (model, populateOptions) =>
 
 exports.getAll = (model) =>
   handleAsync(async (req, res, next) => {
-    const features = new APIFeatures(model.find(), req.query)
+    // если в параметрах строки запроса есть tourID (/:tourID/reviews)
+    // то его нужно подставить в запрос как критерий отбора
+    const tour = req.params.tourID ? { tour: req.params.tourID } : {};
+
+    const features = new APIFeatures(model.find(tour), req.query)
       .filter()
       .sort()
       .limitFields()

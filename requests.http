@@ -206,7 +206,7 @@ GET http://127.0.0.1:3000/api/v1/reviews/655c55f8ee4579567c7d50b2 HTTP/1.1
 ### 
 
 // get nested reviews
-GET http://127.0.0.1:3000/api/v1/tours/655b2fe37ef9194aa0d9e25d/reviews HTTP/1.1
+GET http://127.0.0.1:3000/api/v1/tours/5c88fa8cf4afda39709c295a/reviews HTTP/1.1
 ### 
 
 // delete review by ID
