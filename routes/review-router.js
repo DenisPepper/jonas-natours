@@ -18,6 +18,11 @@ router
 
 router
   .route('/:id')
+  .patch(
+    authController.protect,
+    authController.allowTo('admin', 'user'),
+    reviewController.deleteReview,
+  )
   .delete(
     authController.protect,
     authController.allowTo('admin', 'user'),

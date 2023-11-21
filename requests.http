@@ -206,3 +206,13 @@ GET http://127.0.0.1:3000/api/v1/tours/655b2fe37ef9194aa0d9e25d/reviews HTTP/1.1
 DELETE http://127.0.0.1:3000/api/v1/reviews/655c4e70667c1a570c528496 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDQ3MzU5NywiZXhwIjoxNzAxMzM3NTk3fQ.PjTZZUoOY_jsNH6SHqNCqHrFKZJiprUkYndRqjMsCHs
 ### 
+
+// обновит данные отзыва by ID
+PATCH  http://127.0.0.1:3000/api/v1/reviews/655b4ce2a1c9343a54a5b006 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4MjhmMDJhMzA0OGU2YjBjYSIsImlhdCI6MTcwMDQ3MzU5NywiZXhwIjoxNzAxMzM3NTk3fQ.PjTZZUoOY_jsNH6SHqNCqHrFKZJiprUkYndRqjMsCHs
+
+{
+    "review": "Отличный тур! Всем рекомендую 🤠🤠🤠"
+}
+###
