@@ -204,7 +204,7 @@ content-type: application/json
 
 {
   "review": "⭐⭐⭐⭐⭐",
-  "rating": 5
+  "rating": 4.565
 }
 ###
 
