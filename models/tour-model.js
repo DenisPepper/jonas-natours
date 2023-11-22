@@ -63,7 +63,7 @@ const tourSchema = new mongoose.Schema(
     startDates: [Date],
     slug: String,
     isSecret: { type: Boolean, default: false },
-    startLocaton: {
+    startLocation: {
       // GeoJSON
       type: { type: String, default: 'Point', enum: ['Point'] },
       coordinates: [Number],
@@ -91,6 +91,11 @@ const tourSchema = new mongoose.Schema(
 // -1 - сортировка по убыванию
 tourSchema.index({ price: 1, ratingsAverage: -1 }); // составной индекс
 tourSchema.index({ slug: 1 });
+
+// проиндексирует поле startLocaton, т.к.
+// относительно него предполагаются геопространственные вычисления
+// в методе getToursAround
+tourSchema.index({ startLocaton: '2dsphere' });
 
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;

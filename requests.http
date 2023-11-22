@@ -235,3 +235,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWRhZWNkO
     "rating": "5"
 }
 ###
+
+// получит список расположенных по близости туров
+// tours/tours-around/:distance/unit/:unit/center/:latlng,
+GET http://127.0.0.1:3000/api/v1/tours/tours-around/400/unit/mi/center/34.111745,-118.113491 HTTP/1.1
+### 

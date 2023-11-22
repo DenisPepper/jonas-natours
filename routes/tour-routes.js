@@ -31,6 +31,11 @@ router
   .route('/top-5-cheap')
   .get(tourController.aliasTopTours, tourController.getTours);
 
+router.get(
+  '/tours-around/:distance/unit/:unit/center/:latlng',
+  tourController.getToursAround,
+);
+
 router
   .route('/:id')
   .get(tourController.getTourById)

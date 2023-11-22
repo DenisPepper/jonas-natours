@@ -1,6 +1,8 @@
 const Tour = require('../models/tour-model');
 const handleAsync = require('../utils/handle-async');
 const factory = require('./handler-factory');
+const AppError = require('../utils/app-error');
+const getEarthRadius = require('../utils/get-earth-radius');
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = 5;
@@ -70,3 +72,26 @@ exports.getMonthlyPlan = handleAsync(async (req, res, next) => {
 });
 // { $unwind: '$startDates' }, startDates - массив,
 // $unwind - создаст количество документов, равное числу элементов массива
+
+exports.getToursAround = handleAsync(async (req, res, next) => {
+  const { distance, unit } = req.params;
+  const radius = getEarthRadius(distance, unit);
+  const [lat, lng] = req.params.latlng.split(',');
+
+  if (!lat || !lng || !radius)
+    return next(new AppError('No data found in the specified format', 400));
+
+  // сделает геопространственный запрос
+  // для того, чтобы делать геопространственные запросы,
+  // нужно проиндексировать поле, относительно которого делается расчет
+  // в данном случае это поле startLocation
+  const tours = await Tour.find({
+    startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
+  });
+
+  res.status(200).json({
+    status: 'success',
+    results: tours.length,
+    data: tours,
+  });
+});
