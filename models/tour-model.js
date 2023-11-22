@@ -85,6 +85,11 @@ const tourSchema = new mongoose.Schema(
   { toObject: { virtuals: true } },
 );
 
+// установит индексы полям:
+// 1 - сортировка по возрастанию
+// -1 - сортировка по убыванию
+tourSchema.index({ price: 1 });
+
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 }); //виртуальное поле, которого не будет в БД, но будет в результате запроса
