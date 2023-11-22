@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Tour = require('./tour-model');
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -30,6 +31,35 @@ const reviewSchema = new mongoose.Schema(
   { toObject: { virtuals: true } },
 );
 
+// Static model methods
+// статический метод модели по расчету среднего рейтинга
+reviewSchema.statics.calcAverageRatings = async function (tourID) {
+  // this - модель
+  // statas - результат запроса, который
+  // выбирает отзывы по ID тура
+  // группирует результат по ID тура, вычисляя:
+  // поле nRating - как сумму всех найденных документов в выборке (отзывов)
+  // поле avgRating - как среднее значение полей 'rating'
+  const stats = await this.aggregate([
+    {
+      $match: { tour: tourID },
+    },
+    {
+      $group: {
+        _id: '$tour',
+        nRating: { $sum: 1 },
+        avgRating: { $avg: '$rating' },
+      },
+    },
+  ]);
+
+  // находит тур по ID и обновляет новыми данными
+  await Tour.findByIdAndUpdate(tourID, {
+    ratingsAverage: stats[0].avgRating,
+    ratingsQuantity: stats[0].nRating,
+  });
+};
+
 // middlewares
 // просит монго сделать вложенные запросы
 reviewSchema.pre(/^find/, function (next) {
@@ -47,6 +77,12 @@ reviewSchema.pre(/^find/, function (next) {
   });
 
   next();
+});
+
+// после сохранения отзыва (post save) в БД, модель вызовет функцию расчета среднего рейтинга
+reviewSchema.post('save', function () {
+  // this - ткущий документ
+  this.constructor.calcAverageRatings(this.tour);
 });
 
 const Review = mongoose.model('Review', reviewSchema);

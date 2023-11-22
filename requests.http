@@ -179,18 +179,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjZjc4M
 // create a new tour
 POST http://127.0.0.1:3000/api/v1/tours/ HTTP/1.1
 content-type: application/json
- 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWRhZWNkOWY2MzcxMjU0MGVhYzgwZiIsImlhdCI6MTcwMDYzODQxNCwiZXhwIjoxNzAxNTAyNDE0fQ.OiivYgixk6H4nDAQ-5Fj4GAIHHuFtIU1tP1-yAeAahI
+
 {
   "name": "TEST TEST TEST ☝️☝️☝️☝️☝️☝️☝️☝️",
   "duration": 7,
   "maxGroupSize": 15,
   "difficulty": "medium",
   "price": 1015,
-  "summary": "Test",
-  "description": "Test.",
-  "imageCover": "tour-2-cover.jpg",
-  "isSecret": false,
-  "ratingsAverage":5
+  "summary": "TEST",
+  "description": "TEST",
+  "imageCover": "tour-2-cover.jpg"
 }
 ###
 
@@ -199,13 +198,13 @@ GET http://127.0.0.1:3000/api/v1/tours/5c88fa8cf4afda39709c295a HTTP/1.1
 ###
  
  // create review  
-POST http://127.0.0.1:3000/api/v1/tours/655b2fe37ef9194aa0d9e25d/reviews HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTVmMGZjZDE0ZWEwMTQ1OGY2YzhmNyIsImlhdCI6MTcwMDQ4MTQ3OCwiZXhwIjoxNzAxMzQ1NDc4fQ.ni0pEiHNaLS6Yf7DGh-gwFvHNzf1YOj2-mnFEdnQ85Q
+POST http://127.0.0.1:3000/api/v1/tours/655e0ddfcef06e2c2036c922/reviews HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWRhZWNkOWY2MzcxMjU0MGVhYzgwZiIsImlhdCI6MTcwMDYzODQxNCwiZXhwIjoxNzAxNTAyNDE0fQ.OiivYgixk6H4nDAQ-5Fj4GAIHHuFtIU1tP1-yAeAahI
 content-type: application/json
 
 {
-  "review": "Нормальный тур, всем рекомендую!!!😊",
-  "rating": 4
+  "review": "⭐⭐⭐⭐⭐",
+  "rating": 5
 }
 ###
 
