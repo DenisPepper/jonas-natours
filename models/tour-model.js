@@ -88,7 +88,8 @@ const tourSchema = new mongoose.Schema(
 // установит индексы полям:
 // 1 - сортировка по возрастанию
 // -1 - сортировка по убыванию
-tourSchema.index({ price: 1 });
+tourSchema.index({ price: 1, ratingsAverage: -1 }); // составной индекс
+tourSchema.index({ slug: 1 });
 
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
