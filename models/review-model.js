@@ -55,8 +55,8 @@ reviewSchema.statics.calcAverageRatings = async function (tourID) {
 
   // находит тур по ID и обновляет новыми данными
   await Tour.findByIdAndUpdate(tourID, {
-    ratingsAverage: stats[0].avgRating,
-    ratingsQuantity: stats[0].nRating,
+    ratingsAverage: stats[0]?.avgRating || 0, //установит 0, если удалят последний отзыв
+    ratingsQuantity: stats[0]?.nRating || 0, //установит 0, если удалят последний отзыв
   });
 };
 
