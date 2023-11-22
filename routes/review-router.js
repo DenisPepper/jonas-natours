@@ -7,11 +7,13 @@ const reviewController = require('../controllers/review-controller');
 // из роутера туров при перенаправлении: router.use('/:tourID/reviews', reviewRouter);
 const router = express.Router({ mergeParams: true });
 
+// потребует авторизацию для всех нижележащих роутов
+router.use(authController.protect);
+
 router
   .route('/')
   .get(reviewController.getReviews)
   .post(
-    authController.protect,
     authController.allowTo('user'),
     reviewController.checkRequestBody,
     reviewController.createReview,
@@ -20,13 +22,8 @@ router
 router
   .route('/:id')
   .get(reviewController.getReviewById)
-  .patch(
-    authController.protect,
-    authController.allowTo('admin', 'user'),
-    reviewController.updateReview,
-  )
+  .patch(authController.allowTo('admin', 'user'), reviewController.updateReview)
   .delete(
-    authController.protect,
     authController.allowTo('admin', 'user'),
     reviewController.deleteReview,
   );
