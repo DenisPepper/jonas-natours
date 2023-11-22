@@ -60,7 +60,7 @@ const userSchema = new mongoose.Schema({
 
 /*
 Методы промежуточного программного обеспечения
-*/
+
 userSchema.pre('save', async function (next) {
   //если пароль не был изменен, то шифровать не надо
   if (!this.isModified('password')) return next();
@@ -81,7 +81,7 @@ userSchema.pre('save', function (next) {
   // пользователь не пройдет проверку в hasBeenChangedPasswordAfterToken()
   this.passwordChangedAt = Date.now() - 1000;
   next();
-});
+});*/
 
 // исклечение из выборки неактивных пользователей
 userSchema.pre(/^find/, function (next) {
