@@ -60,6 +60,11 @@ reviewSchema.statics.calcAverageRatings = async function (tourID) {
   });
 };
 
+// установит составной индекс: тур + пользователь, с признаком уникальности
+// БД выдаст ошибку, если один и тотже пользователь решить оставить второй отзыв на один и тотже тур
+// один пользователь -> только один отзыв
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
 // middlewares
 // просит монго сделать вложенные запросы
 reviewSchema.pre(/^find/, function (next) {
