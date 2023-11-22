@@ -4,48 +4,31 @@ const userController = require('../controllers/user-controller');
 
 const router = express.Router();
 
+// все middleware выполняются последовательно сверху - вниз
+
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
-
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-router.get(
-  '/my-user',
-  authController.protect,
-  userController.setAuthId,
-  userController.getUserById,
-);
+// потребует авторизацию для всех нижележащих роутов
+router.use(authController.protect);
 
-router.patch(
-  '/updatePassword',
-  authController.protect,
-  authController.updatePassword,
-);
-router.patch(
-  '/updateUserInfo',
-  authController.protect,
-  userController.updateUserInfo,
-);
-router.delete(
-  '/deleteUser',
-  authController.protect,
-  userController.deleteMyUser,
-);
+router.get('/my-user', userController.setAuthId, userController.getUserById);
+
+router.patch('/updatePassword', authController.updatePassword);
+router.patch('/updateUserInfo', userController.updateUserInfo);
+router.delete('/deleteUser', userController.deleteMyUser);
+
+// потребует наличие роли admin для всех нижележащих роутов
+router.use(authController.allowTo('admin'));
+
 router.route('/').get(userController.getAllUsers);
 
 router
   .route('/:id')
   .get(userController.getUserById)
-  .patch(
-    authController.protect,
-    authController.allowTo('admin'),
-    userController.updateUser,
-  )
-  .delete(
-    authController.protect,
-    authController.allowTo('admin'),
-    userController.deleteUser,
-  );
+  .patch(userController.updateUser)
+  .delete(userController.deleteUser);
 
 module.exports = router;
