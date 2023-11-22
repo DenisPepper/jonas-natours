@@ -85,6 +85,31 @@ reviewSchema.post('save', function () {
   this.constructor.calcAverageRatings(this.tour);
 });
 
+// findByIdAndUpdate - тоже нужно пересчитывать рейтинг тура, если в отзыве изменили рейтинг
+// findByIdAndDelete - тоже нужно пересчитатб рейтинг тура, т.к. отзыва с рейтингом больше нет
+//
+// перед выполнением запроса
+reviewSchema.pre(/^findOneAnd/, async function (next) {
+  // this - текущий запрос
+
+  // выполняем запрос и получаем документ - отзыв
+  // записав его в свойство объекта запроса
+  this.review = await this.findOne();
+  next();
+});
+
+// после выполнения запроса
+reviewSchema.post(/^findOneAnd/, function () {
+  // this - текущий запрос
+
+  // извлекаем id тура из свойства review запроса
+  // это свойство было создано на стадии reviewSchema.pre(/^findOneAnd/
+  const { tour: tourID } = this.review;
+
+  // вызовет статический метод модели Review для расчета среднего ретийнга
+  this.review.constructor.calcAverageRatings(tourID);
+});
+
 const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;
