@@ -28,6 +28,10 @@ app.set('views', path.join(__dirname, 'views'));
 
 // --------1 global middlewares -------------------
 
+// Обрабатывает статические файлы в указанной папке
+// http://127.0.0.1:3000/overview.html - откроет в браузере указанный ресурс из папки public
+app.use(express.static(path.join(__dirname, 'public')));
+
 // установит заголовки, обеспечивающие безопасность
 // некоторые включены по умолчанию, некоторые надо включать опционально
 // https://github.com/helmetjs/helmet
@@ -57,10 +61,6 @@ app.use(
     ],
   }),
 );
-
-// Обрабатывает статические файлы в указанной папке
-// http://127.0.0.1:3000/overview.html - откроет в браузере указанный ресурс из папки public
-app.use(express.static(`${__dirname}/public`));
 
 if (process.env.NODE_ENV === 'development') {
   // выводит в консоль инфо о запросах/ответах
