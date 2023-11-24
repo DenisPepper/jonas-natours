@@ -7,6 +7,6 @@ const router = express.Router();
 router.get('/', viewController.getOverview);
 
 // добавит роут для просмотра отдельного тура
-router.get('/tour', viewController.getTour);
+router.get('/tour/:slug', viewController.getTour);
 
 module.exports = router;

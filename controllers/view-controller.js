@@ -5,10 +5,6 @@ exports.getOverview = handleAsync(async (req, res, next) => {
   // запрос туров из БД
   const tours = await Tour.find();
 
-  // пстроение шаблона вьюшки
-
-  // рендер шаблона с данными о турах
-
   res.status(200).render('overview', { title: 'All tours', tours }); // передаст в шаблон пропсы
 });
 
