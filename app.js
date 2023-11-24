@@ -81,6 +81,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// добавит middleware, которая для роута '/' отрисует шаблон 'base'
+app.get(routes.home, (req, res, next) => {
+  res.status(200).render('base');
+});
+
 // это middleware будет использовано только для указанного маршрута
 app.use(routes.users, userRouter);
 app.use(routes.tours, tourRouter);
