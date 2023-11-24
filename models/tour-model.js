@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-//const User = require('./user-model');
-//const slugify = require('slugify');
+const slugify = require('slugify');
 
 const tourSchema = new mongoose.Schema(
   {
@@ -110,13 +109,13 @@ tourSchema.virtual('reviews', {
 });
 
 // SAVE NEW DOC MIDDLEWARE
-/* // подписка на событие перед save() и create()
+// подписка на событие перед save() и create()
 tourSchema.pre('save', function (next) {
   // this - это документ, который сохраняется
   this.slug = slugify(this.name, { lower: true });
   next();
 });
-
+/*
 // подписка на событие после save() и create()
 tourSchema.pre('save', function (doc, next) {
   this.slug = slugify(this.name, { lower: true });
