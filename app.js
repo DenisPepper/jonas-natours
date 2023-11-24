@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -22,6 +23,8 @@ const app = express();
 
 // установит pug в качестве шаблонизатора
 app.set('view engine', 'pug');
+// укажет путь до вьюшек
+app.set('views', path.join(__dirname, 'views'));
 
 // --------1 global middlewares -------------------
 
