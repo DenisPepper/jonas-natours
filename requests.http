@@ -240,3 +240,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWRhZWNkO
 // tours/tours-around/:distance/unit/:unit/center/:latlng,
 GET http://127.0.0.1:3000/api/v1/tours/tours-around/400/unit/mi/center/34.111745,-118.113491 HTTP/1.1
 ### 
+
+// получит список расстояний от точки до туров
+// tours/distances/:latlng/unit/:unit
+GET http://127.0.0.1:3000/api/v1/tours/distances/34.111745,-118.113491/unit/mi HTTP/1.1
+###

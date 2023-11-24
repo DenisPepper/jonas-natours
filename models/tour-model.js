@@ -160,12 +160,12 @@ tourSchema.pre(/^find/, function (next) {
 });
 
 //AGGREGATION MIDDLEWARE
-tourSchema.pre('aggregate', function (next) {
+/* tourSchema.pre('aggregate', function (next) {
   // this - это агрегация
   // исключит секретные туры
-  this.pipeline().unshift({ $match: { isSecret: { $ne: true } } });
+  //this.pipeline().unshift({ $match: { isSecret: { $ne: true } } });
   next();
-});
+}); */
 
 const Tour = mongoose.model('Tour', tourSchema);
 

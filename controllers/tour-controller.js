@@ -95,3 +95,28 @@ exports.getToursAround = handleAsync(async (req, res, next) => {
     data: tours,
   });
 });
+
+exports.getDistances = handleAsync(async (req, res, next) => {
+  const { unit } = req.params;
+  const [lat, lng] = req.params.latlng
+    .split(',')
+    .map((item) => Number(item.trim()));
+
+  if (!lat || !lng)
+    return next(new AppError('No data found in the specified format', 400));
+
+  // для использования $geoNear также нужен индекс для поля  startLocaton: '2dsphere'
+  const distances = await Tour.aggregate([
+    {
+      $geoNear: {
+        near: { type: 'Point', coordinates: [lng, lat] },
+        distanceField: 'distance', // это поле, в которое mongo положит расчитанные расстояния
+      },
+    },
+  ]);
+
+  res.status(200).json({
+    status: 'success',
+    data: distances,
+  });
+});
