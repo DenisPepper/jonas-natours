@@ -8,14 +8,13 @@ const hpp = require('hpp');
 const morgan = require('morgan');
 const AppError = require('./utils/app-error');
 const globalErrorHandler = require('./controllers/error-controller');
+const viewRouter = require('./routes/view-routes');
 const tourRouter = require('./routes/tour-routes');
 const userRouter = require('./routes/user-routes');
 const reviewRouter = require('./routes/review-router');
 
 const routes = {
   home: '/',
-  overview: '/overview',
-  tour: '/tour',
   users: '/api/v1/users',
   tours: '/api/v1/tours',
   reviews: '/api/v1/reviews',
@@ -84,22 +83,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// добавит middleware, которая для роута '/' отрисует шаблон 'base'
-app.get(routes.home, (req, res, next) => {
-  res.status(200).render('base', {}); // {} передаст в шаблон пропсы
-});
-
-// добавит роут для просмотра краткой информации о турах
-app.get(routes.overview, (req, res, next) => {
-  res.status(200).render('overview', { title: 'All tours' }); // передаст в шаблон пропсы
-});
-
-// добавит роут для просмотра отдельного тура
-app.get(routes.tour, (req, res, next) => {
-  res.status(200).render('tour', { title: 'The Forest Hiker Tour' }); // передаст в шаблон пропсы
-});
-
 // это middleware будет использовано только для указанного маршрута
+app.use(routes.home, viewRouter);
 app.use(routes.users, userRouter);
 app.use(routes.tours, tourRouter);
 app.use(routes.reviews, reviewRouter);
