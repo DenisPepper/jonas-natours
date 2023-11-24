@@ -20,6 +20,9 @@ const routes = {
 
 const app = express();
 
+// установит pug в качестве шаблонизатора
+app.set('view engine', 'pug');
+
 // --------1 global middlewares -------------------
 
 // установит заголовки, обеспечивающие безопасность
