@@ -29,6 +29,7 @@ app.set('views', path.join(__dirname, 'views'));
 // --------1 global middlewares -------------------
 
 // Обрабатывает статические файлы в указанной папке
+// будет отдавать на клиент при запросах картинки из папки img, стили из папки css
 // http://127.0.0.1:3000/overview.html - откроет в браузере указанный ресурс из папки public
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -83,7 +84,7 @@ app.use((req, res, next) => {
 
 // добавит middleware, которая для роута '/' отрисует шаблон 'base'
 app.get(routes.home, (req, res, next) => {
-  res.status(200).render('base');
+  res.status(200).render('base', { tour: 'The Forest Hiker', user: 'Jonas' }); // передаст в шаблон пропсы
 });
 
 // это middleware будет использовано только для указанного маршрута

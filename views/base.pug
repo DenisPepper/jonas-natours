@@ -1,1 +1,23 @@
-h1 The Park Kamper 
+doctype html 
+html 
+ head 
+   title Natours
+   //- css/style.css, img/favicon.png - всегда загружается из public
+   link(rel='stylesheet' href='css/style.css')
+   link(rel='shortcut icon' type='image/png' href='img/favicon.png')
+
+ body 
+   // пропсы из express
+   h1= tour 
+   p= user.toUpperCase()
+
+   //- небуферный код - это код, который ничего не рендерит
+   //- например, код на javascript 
+   //- небуферный код пишется так:
+   - const x = 10
+
+   //-использование небуферной переменной:
+   h2= 2 * x 
+
+   //- использование паттерна шаблонных строк ES
+   h2 этот заголовок содержит переменную со значением #{tour}
