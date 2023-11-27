@@ -1,5 +1,6 @@
 const Tour = require('../models/tour-model');
 const handleAsync = require('../utils/handle-async');
+const AppError = require('../utils/app-error');
 
 exports.getOverview = handleAsync(async (req, res, next) => {
   // запрос туров из БД
@@ -14,6 +15,8 @@ exports.getTour = handleAsync(async (req, res, next) => {
     path: 'reviews',
     fields: 'review rating user',
   });
+
+  if (!tour) return next(new AppError('Tour not found', 404));
 
   res.status(200).render('tour', { title: tour.name, tour }); // передаст в шаблон пропсы
 });
