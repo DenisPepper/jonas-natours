@@ -1,13 +1,22 @@
-const sendErrorDev = (err, res) => {
-  res.status(err.statusCode).json({
-    error: err,
-    status: err.status,
-    message: err.message,
-    stack: err.stack,
-  });
+const sendErrorDev = (err, req, res) => {
+  // API
+  if (req.originalUrl.startsWith('/api')) {
+    res.status(err.statusCode).json({
+      error: err,
+      status: err.status,
+      message: err.message,
+      stack: err.stack,
+    });
+    return;
+  }
+
+  // RENDERED PAGES
+  res
+    .status(err.statusCode)
+    .render('error', { title: 'Somthing went wrong...', msg: err.message });
 };
 
-const sendError = (err, res) => {
+const sendError = (err, req, res) => {
   // unknow programming error
   if (!err.isOperational) {
     console.error('unknow programming error!🐸', err);
