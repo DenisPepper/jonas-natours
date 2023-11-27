@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { showAlert } from './alerts';
 
 export const login = async (formData) => {
   try {
@@ -7,9 +8,9 @@ export const login = async (formData) => {
       url: 'http://127.0.0.1:3000/api/v1/users/login',
       data: formData,
     });
-    console.log(data);
-    if (data.status === 'success') location.assign('/');
+    showAlert('success', 'You are logged in');
+    if (data.status === 'success') setTimeout(() => location.assign('/'), 1500);
   } catch (error) {
-    console.log(error.response.data.message);
+    showAlert('error', error.response.data.message || 'You are not logged!');
   }
 };
