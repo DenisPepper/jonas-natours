@@ -10,7 +10,9 @@
     "start": "node server.js",
     "debug": "ndb server.js",
     "prod": "NODE_ENV=production node server.js",
-    "prod:windows": "SET NODE_ENV=production& node server.js"
+    "prod:windows": "SET NODE_ENV=production& node server.js",
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
+    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
   "repository": {
     "type": "git",
