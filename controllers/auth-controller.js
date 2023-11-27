@@ -101,6 +101,30 @@ exports.protect = handleAsync(async (req, res, next) => {
   next();
 });
 
+// только для отрисовки страниц
+exports.isLoggedIn = handleAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    const verifiedToken = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET,
+    );
+    // проверяем пользователя, что он существует и
+    // что, с момента получения токена, пользователь не менял пароль, т.к.
+    // при краже токена пользователь мог в целях безопасности сменить свой пароль
+    const user = await User.findById(verifiedToken.id).select(
+      '+passwordChangedAt',
+    );
+
+    if (!user || user.hasBeenChangedPasswordAfterToken(verifiedToken.iat))
+      return next();
+
+    // добавим пользователя в ответ
+    res.locals.user = user; // эта переменная будет доступна в шаблоне
+    return next();
+  }
+  next();
+});
+
 exports.allowTo =
   (...roles) =>
   (req, res, next) => {
