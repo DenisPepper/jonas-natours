@@ -22,6 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+/.cache
+public/js/bundle.js
+public/js/bundle.js.map
+
 test.js
 yandex.js
 secure.txt
