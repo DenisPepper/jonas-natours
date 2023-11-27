@@ -17,3 +17,7 @@ exports.getTour = handleAsync(async (req, res, next) => {
 
   res.status(200).render('tour', { title: tour.name, tour }); // передаст в шаблон пропсы
 });
+
+exports.getLoginForm = handleAsync(async (req, res, next) => {
+  res.status(200).render('login', { title: 'Log into your account' }); // передаст в шаблон пропсы
+});

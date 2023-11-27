@@ -9,4 +9,7 @@ router.get('/', viewController.getOverview);
 // добавит роут для просмотра отдельного тура
 router.get('/tour/:slug', viewController.getTour);
 
+// логин
+router.get('/login', viewController.getLoginForm);
+
 module.exports = router;
