@@ -12,9 +12,11 @@ const login = async (formData) => {
   };
 
   try {
-    await fetch(path, params);
+    const response = await fetch(path, params);
+    const { status } = await response.json();
+    if (status === 'success') location.assign('/');
   } catch (error) {
-    console.log('Ошибка авторизации');
+    console.log('Ошибка при отправке запроса авторизации');
   }
 };
 

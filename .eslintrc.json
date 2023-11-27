@@ -21,6 +21,8 @@
   },
   "globals": {
     "document": "readonly",
-    "axios": "readonly"
+    "axios": "readonly",
+    "window": "readonly",
+    "location": "readonly"
   }
 }
