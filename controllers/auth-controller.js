@@ -67,6 +67,19 @@ exports.login = handleAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
+exports.logout = (req, res) => {
+  const fakeToken = '';
+  const cookieOptions = {
+    expires: new Date(Date.now() + 10 * 1000),
+    //будет доступно только при http взаимодействии
+    httpOnly: true,
+  };
+  res.cookie('jwt', fakeToken, cookieOptions);
+  res.status(200).json({
+    status: 'success',
+  });
+};
+
 exports.protect = handleAsync(async (req, res, next) => {
   // получаем токен и проверяем его поддлинность
   let tokenJWT = '';
