@@ -18,5 +18,9 @@
   },
   "parserOptions": {
     "ecmaVersion": 2020
+  },
+  "globals": {
+    "document": "readonly",
+    "axios": "readonly"
   }
 }

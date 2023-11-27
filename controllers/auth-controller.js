@@ -71,7 +71,11 @@ exports.protect = handleAsync(async (req, res, next) => {
   // получаем токен и проверяем его поддлинность
   let tokenJWT = '';
   if (req.headers.authorization?.startsWith('Bearer')) {
+    // установит токен из заголовка запроса
     tokenJWT = req.headers.authorization.split(' ').pop();
+  } else if (req.cookies.jwt) {
+    // установит токен из куков, которые прочитает cookieParser
+    tokenJWT = req.cookies.jwt;
   }
   if (!tokenJWT) return next(new AppError('You are not authorized!', 401));
 

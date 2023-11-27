@@ -6,6 +6,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const AppError = require('./utils/app-error');
 const globalErrorHandler = require('./controllers/error-controller');
 const viewRouter = require('./routes/view-routes');
@@ -42,6 +43,9 @@ app.use(helmet());
 //обрабатывает body в запросе, считывает даные из тела запроса в req.body
 // установит размер данных в body не более 10 кб
 app.use(express.json({ limit: '10kb' }));
+
+// читает куки из запросов
+app.use(cookieParser());
 
 // очистка входных данных от noSQL инъекций
 app.use(mongoSanitize());
@@ -80,6 +84,7 @@ app.use('/api', limiter);
 // мидлвара, которая добавляет время запроса
 app.use((req, res, next) => {
   req.time = Date.now();
+  console.log(req.cookies);
   next();
 });
 
