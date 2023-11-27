@@ -1,6 +1,4 @@
-const loginForm = document.querySelector('.form');
-
-const login = async (formData) => {
+export const login = async (formData) => {
   const path = 'http://127.0.0.1:3000/api/v1/users/login';
 
   const params = {
@@ -19,12 +17,3 @@ const login = async (formData) => {
     console.log('Ошибка при отправке запроса авторизации');
   }
 };
-
-loginForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const formData = new FormData(evt.target);
-  login({
-    email: formData.get('email'),
-    password: formData.get('pass'),
-  });
-});
