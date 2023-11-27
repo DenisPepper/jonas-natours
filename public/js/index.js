@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import { login } from './login';
 
 const loginForm = document.querySelector('.form');
