@@ -7,7 +7,7 @@ header.header
     //- user - переменная из res.locals.user
     if user
       a.nav__el.nav__el--logout Log out
-      a.nav__el
+      a.nav__el(href='/my-user')
         img.nav__user-img(src=`/img/users/${user.photo}` alt=`photo of ${user.name}`) 
         span= user.name.split(' ').shift()
     else 
