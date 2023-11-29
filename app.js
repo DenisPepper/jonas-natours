@@ -44,6 +44,10 @@ app.use(helmet());
 // установит размер данных в body не более 10 кб
 app.use(express.json({ limit: '10kb' }));
 
+// установит парсер данных формы, когда форма отправляется нативно браузером с перезагрузкой страницы
+// поместит данные в req.body
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
 // читает куки из запросов
 app.use(cookieParser());
 
