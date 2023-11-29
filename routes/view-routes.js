@@ -4,17 +4,16 @@ const authController = require('../controllers/auth-controller');
 
 const router = express.Router();
 
-// будет проверять авторизационные куки и передавать
-// данные для вьюшек в зависимости от авторизаци
-router.use(authController.isLoggedIn);
-
 // добавит роут для просмотра краткой информации о турах
-router.get('/', viewController.getOverview);
+router.get('/', authController.isLoggedIn, viewController.getOverview);
 
 // добавит роут для просмотра отдельного тура
-router.get('/tour/:slug', viewController.getTour);
+router.get('/tour/:slug', authController.isLoggedIn, viewController.getTour);
 
 // логин
-router.get('/login', viewController.getLoginForm);
+router.get('/login', authController.isLoggedIn, viewController.getLoginForm);
+
+// личный кабинет
+router.get('/my-user', authController.protect, viewController.getAccount);
 
 module.exports = router;

@@ -110,7 +110,8 @@ exports.protect = handleAsync(async (req, res, next) => {
 
   // добавит пользователя в объект запроса для повторного переиспользования
   req.user = user;
-
+  // добавит пользователя как пропс для вьюшки
+  res.locals.user = user;
   next();
 });
 
