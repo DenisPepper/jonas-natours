@@ -1,4 +1,5 @@
 const Tour = require('../models/tour-model');
+const User = require('../models/user-model');
 const handleAsync = require('../utils/handle-async');
 const AppError = require('../utils/app-error');
 
@@ -28,3 +29,22 @@ exports.getLoginForm = (req, res, next) => {
 exports.getAccount = (req, res, next) => {
   res.status(200).render('account', { title: 'Your account' }); // передаст в шаблон пропсы
 };
+
+exports.updateUserData = handleAsync(async (req, res, next) => {
+  const { name, email } = req.body;
+  // req.user - существует в оперативной памяти сервера после авторизации в protect
+  const { _id: id } = req.user;
+
+  // 1 Получаем документ пользователя
+  const user = await User.findByIdAndUpdate(
+    id,
+    { name, email },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  // отрисует шаблон
+  res.status(200).render('account', { title: 'Your account', user }); // передаст в шаблон пропсы
+});

@@ -16,4 +16,11 @@ router.get('/login', authController.isLoggedIn, viewController.getLoginForm);
 // личный кабинет
 router.get('/my-user', authController.protect, viewController.getAccount);
 
+//обновление данных пользователя
+router.post(
+  '/submit-user-data',
+  authController.protect,
+  viewController.updateUserData,
+);
+
 module.exports = router;
