@@ -29,7 +29,9 @@ block content
       .user-view__content
         .user-view__form-container
           h2.heading-secondary.ma-bt-md Your account settings
-          form.form.form-user-data(method='POST', action='/submit-user-data')
+          form.form.form-user-data
+            //- без api
+            //-form.form.form-user-data(method='POST', action='/submit-user-data') 
             .form__group
               label.form__label(for='name') Name
               input#name.form__input(type='text', name='name', value= user.name, required)
