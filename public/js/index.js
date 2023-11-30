@@ -1,10 +1,11 @@
 import '@babel/polyfill';
 import { login, logout } from './login';
-import { updateData } from './update-settings';
+import { updateSettings } from './update-settings';
 
 const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav__el--logout');
 const formUserData = document.querySelector('.form-user-data');
+const formUserSettings = document.querySelector('.form-user-settings');
 
 loginForm &&
   loginForm.addEventListener('submit', (evt) => {
@@ -22,8 +23,23 @@ formUserData &&
   formUserData.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const formData = new FormData(evt.target);
-    updateData({
+    updateSettings({
       email: formData.get('email'),
       name: formData.get('name'),
     });
+  });
+
+formUserSettings &&
+  formUserSettings.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const formData = new FormData(evt.target);
+    await updateSettings({
+      currentPassword: formData.get('password-current'),
+      password: formData.get('password'),
+      passwordConfirm: formData.get('password-confirm'),
+    });
+    const inputs = evt.target.querySelectorAll('input');
+    for (const input of inputs) {
+      input.value = '';
+    }
   });

@@ -49,12 +49,12 @@ block content
           form.form.form-user-settings
             .form__group
               label.form__label(for='password-current') Current password
-              input#password-current.form__input(type='password', placeholder='••••••••', required, minlength='8')
+              input#password-current.form__input(type='password', name='password-current', placeholder='••••••••', required, minlength='8')
             .form__group
               label.form__label(for='password') New password
-              input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+              input#password.form__input(type='password', name='password', placeholder='••••••••', required, minlength='8')
             .form__group.ma-bt-lg
               label.form__label(for='password-confirm') Confirm password
-              input#password-confirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
+              input#password-confirm.form__input(type='password', name='password-confirm', placeholder='••••••••', required, minlength='8')
             .form__group.right
               button.btn.btn--small.btn--green Save password
