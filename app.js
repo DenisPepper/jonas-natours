@@ -88,7 +88,6 @@ app.use('/api', limiter);
 // мидлвара, которая добавляет время запроса
 app.use((req, res, next) => {
   req.time = Date.now();
-  console.log(req.cookies);
   next();
 });
 
