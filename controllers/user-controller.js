@@ -36,18 +36,17 @@ exports.deleteUser = factory.deleteOneById(User);
 
 exports.updateUserInfo = handleAsync(async (req, res, next) => {
   const { name, email } = req.body;
+  const data = { name, email };
+  if (req.file.filename) data.photo = req.file.filename;
+
   // req.user - существует в оперативной памяти сервера после авторизации в protect
   const { _id: id } = req.user;
 
   // 1 Получаем документ пользователя
-  const user = await User.findByIdAndUpdate(
-    id,
-    { name, email },
-    {
-      new: true,
-      runValidators: true,
-    },
-  );
+  const user = await User.findByIdAndUpdate(id, data, {
+    new: true,
+    runValidators: true,
+  });
 
   res.status(200).json({
     status: 'success',
