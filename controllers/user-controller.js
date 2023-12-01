@@ -1,6 +1,11 @@
+const multer = require('multer');
 const User = require('../models/user-model');
 const handleAsync = require('../utils/handle-async');
 const factory = require('./handler-factory');
+
+const upload = multer({ dest: 'public/img/users' });
+
+exports.uploadUserPhoto = upload.single('photo');
 
 exports.getAllUsers = factory.getAll(User);
 

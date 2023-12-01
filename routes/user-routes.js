@@ -18,7 +18,11 @@ router.use(authController.protect);
 router.get('/my-user', userController.setAuthId, userController.getUserById);
 
 router.patch('/updatePassword', authController.updatePassword);
-router.patch('/updateUserInfo', userController.updateUserInfo);
+router.patch(
+  '/updateUserInfo',
+  userController.uploadUserPhoto,
+  userController.updateUserInfo,
+);
 router.delete('/deleteUser', userController.deleteMyUser);
 
 // потребует наличие роли admin для всех нижележащих роутов
