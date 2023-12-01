@@ -2,8 +2,27 @@ const multer = require('multer');
 const User = require('../models/user-model');
 const handleAsync = require('../utils/handle-async');
 const factory = require('./handler-factory');
+const AppError = require('../utils/app-error');
 
-const upload = multer({ dest: 'public/img/users' });
+// построитель директории и имени файла
+const multerStorage = multer.diskStorage({
+  destination: (req, file, callback) => callback(null, 'public/img/users'),
+  filename: (req, file, callback) => {
+    const extention = file.mimetype.split('/').pop();
+    callback(null, `user-${req.user.id}-${Date.now()}.${extention}`);
+  },
+});
+
+// валидатор загружаемых файлов - пропустит только 'image'
+const multerFilter = (req, file, callback) => {
+  if (file.mimetype.startsWith('image')) {
+    callback(null, true);
+  } else {
+    callback(new AppError('Not an image!', 400), false);
+  }
+};
+
+const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 
 exports.uploadUserPhoto = upload.single('photo');
 
